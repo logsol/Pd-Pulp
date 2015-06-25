@@ -184,88 +184,6 @@ void PureDataAudioProcessor::releaseResources()
     pdOutBuffer.free();
 }
 
-/*
-
-void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
-{
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback
-    // when they first compile the plugin, but obviously you don't need to
-    // this code if your algorithm already fills all the output channels.
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-
-    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
-    int len = buffer.getNumSamples();
-    int idx = 0;
-
-    pd->sendFloat ("freq", freq->getValue() * 2000.0f);
-    pd->sendFloat ("volume", volume->getValue() * 1.0f);
-    pd->sendFloat ("del_delay", del_delay->getValue() );
-    pd->sendFloat ("del_feedback", del_feedback->getValue() );
-    pd->sendFloat ("del_mod_rate", del_mode_rate->getValue() );
-    pd->sendFloat ("del_mod_depth", del_mode_depth->getValue() );
-
-    MidiMessage message;
-    int samplePosition = buffer.getNumSamples();
-    MidiBuffer::Iterator it (midiMessages);
-    
-    if (! it.getNextEvent (message, samplePosition))
-    {
-	samplePosition = buffer.getNumSamples();
-    }
-
-    while (len > 0)
-    {
-	int max = jmin (len, pd->blockSize());
-
-	// interleave audio
-	{
-	    float* dstBuffer = pdInBuffer.getData() + pos;
-	    const float* srcBuffer = pdOutBuffer.getData() + pos;
-
-	    for (int i = 0; i < max; ++i)
-	    {
-		for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
-		{
-		    *dstBuffer++ = buffer.getReadPointer(channelIndex) [idx + i];
-		    buffer.getWritePointer (channelIndex) [idx + i] = *srcBuffer++;
-		}
-	    }
-	    pos++;
-	}
-
-	if (pos >= pd->blockSize())
-	{
-	    if (idx >= samplePosition && idx <= (samplePosition + pd->blockSize()))
-	    {
-		if (message.isNoteOn (true))
-		    pd->sendNoteOn (message.getChannel(), message.getNoteNumber(), message.getVelocity());
-		else if (message.isController())
-		    pd->sendControlChange (message.getChannel(), message.getControllerNumber(), message.getControllerValue());
-		else if (message.isProgramChange())
-		    pd->sendProgramChange (message.getChannel(), message.getProgramChangeNumber());
-		else if (message.isPitchWheel())
-		    pd->sendPitchBend (message.getChannel(), message.getPitchWheelValue());
-		// TODO add remaining midi types
-
-		if (! it.getNextEvent (message, samplePosition))
-		{
-		    samplePosition = buffer.getNumSamples();
-		}
-	    }
-	    pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
-	    pos = 0;
-	}
-
-	idx += max;
-	len -= max;
-    }
-}
- 
-*/
 
 void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
@@ -334,65 +252,92 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
 }
 
 
-// Old
-
 /*
-void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
-{
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback
-    // when they first compile the plugin, but obviously you don't need to
-    // this code if your algorithm already fills all the output channels.
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-    
-    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
-    int len = buffer.getNumSamples();
-    int idx = 0;
-    
-    pd->sendFloat ("freq", freq->getValue() * 2000.0f);
-    pd->sendFloat ("volume", volume->getValue() * 1.0f);
-    pd->sendFloat ("del_delay", del_delay->getValue() );
-    pd->sendFloat ("del_feedback", del_feedback->getValue() );
-    pd->sendFloat ("del_mod_rate", del_mode_rate->getValue() );
-    pd->sendFloat ("del_mod_depth", del_mode_depth->getValue() );
-    
-    //pd->sendNoteOn(<#const int channel#>, <#const int pitch#>)
-    
-    while (len > 0)
-    {
-        int max = jmin (len, pd->blockSize());
-        
-        /interleave audio
-        {
-            float* dstBuffer = pdInBuffer.getData();
-            for (int i = 0; i < max; ++i)
-            {
-                for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
-                    *dstBuffer++ = buffer.getReadPointer(channelIndex) [idx + i];
-            }
-        }
-        
-        pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
-        
-        // write-back
-        {
-            const float* srcBuffer = pdOutBuffer.getData();
-            for (int i = 0; i < max; ++i)
-            {
-                for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
-                    buffer.getWritePointer (channelIndex) [idx + i] = *srcBuffer++;
-            }
-        }
-        
-        idx += max;
-        len -= max;
-    }
-}
+ 
+ // Other version of processBlock from Fabian to integrate Midi and to prevent audio buffer underuns ???
+ 
+ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+ {
+ // In case we have more outputs than inputs, this code clears any output
+ // channels that didn't contain input data, (because these aren't
+ // guaranteed to be empty - they may contain garbage).
+ // I've added this to avoid people getting screaming feedback
+ // when they first compile the plugin, but obviously you don't need to
+ // this code if your algorithm already fills all the output channels.
+ for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+ buffer.clear (i, 0, buffer.getNumSamples());
+ 
+ int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
+ int len = buffer.getNumSamples();
+ int idx = 0;
+ 
+ pd->sendFloat ("freq", freq->getValue() * 2000.0f);
+ pd->sendFloat ("volume", volume->getValue() * 1.0f);
+ pd->sendFloat ("del_delay", del_delay->getValue() );
+ pd->sendFloat ("del_feedback", del_feedback->getValue() );
+ pd->sendFloat ("del_mod_rate", del_mode_rate->getValue() );
+ pd->sendFloat ("del_mod_depth", del_mode_depth->getValue() );
+ 
+ MidiMessage message;
+ int samplePosition = buffer.getNumSamples();
+ MidiBuffer::Iterator it (midiMessages);
+ 
+ if (! it.getNextEvent (message, samplePosition))
+ {
+	samplePosition = buffer.getNumSamples();
+ }
+ 
+ while (len > 0)
+ {
+	int max = jmin (len, pd->blockSize());
+ 
+	// interleave audio
+	{
+ float* dstBuffer = pdInBuffer.getData() + pos;
+ const float* srcBuffer = pdOutBuffer.getData() + pos;
+ 
+ for (int i = 0; i < max; ++i)
+ {
+ for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
+ {
+ *dstBuffer++ = buffer.getReadPointer(channelIndex) [idx + i];
+ buffer.getWritePointer (channelIndex) [idx + i] = *srcBuffer++;
+ }
+ }
+ pos++;
+	}
+ 
+	if (pos >= pd->blockSize())
+	{
+ if (idx >= samplePosition && idx <= (samplePosition + pd->blockSize()))
+ {
+ if (message.isNoteOn (true))
+ pd->sendNoteOn (message.getChannel(), message.getNoteNumber(), message.getVelocity());
+ else if (message.isController())
+ pd->sendControlChange (message.getChannel(), message.getControllerNumber(), message.getControllerValue());
+ else if (message.isProgramChange())
+ pd->sendProgramChange (message.getChannel(), message.getProgramChangeNumber());
+ else if (message.isPitchWheel())
+ pd->sendPitchBend (message.getChannel(), message.getPitchWheelValue());
+ // TODO add remaining midi types
+ 
+ if (! it.getNextEvent (message, samplePosition))
+ {
+ samplePosition = buffer.getNumSamples();
+ }
+ }
+ pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
+ pos = 0;
+	}
+ 
+	idx += max;
+	len -= max;
+ }
+ }
+ 
+ */
 
-*/
+
 //==============================================================================
 bool PureDataAudioProcessor::hasEditor() const
 {
