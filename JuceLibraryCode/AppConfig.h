@@ -219,10 +219,10 @@
  #define JucePlugin_Desc                   "JUCEPureData"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "moninstruments"
+ #define JucePlugin_Manufacturer           ""
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
- #define JucePlugin_ManufacturerWebsite    "www.mominstruments.com"
+ #define JucePlugin_ManufacturerWebsite    ""
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
  #define JucePlugin_ManufacturerEmail      "info@o-g-sus.de"

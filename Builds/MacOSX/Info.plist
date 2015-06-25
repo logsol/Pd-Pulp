@@ -20,14 +20,14 @@
     <key>CFBundleVersion</key>
     <string>1.0.0</string>
     <key>NSHumanReadableCopyright</key>
-    <string>moninstruments</string>
+    <string></string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>AudioComponents</key>
     <array>
       <dict>
         <key>name</key>
-        <string>moninstruments: JUCEPureData</string>
+        <string>: JUCEPureData</string>
         <key>description</key>
         <string>JUCEPureData</string>
         <key>factoryFunction</key>

@@ -12,7 +12,7 @@
 			<key>manufacturer</key>
 			<string>Manu</string>
 			<key>name</key>
-			<string>moninstruments: JUCEPureData</string>
+			<string>: JUCEPureData</string>
 			<key>subtype</key>
 			<string>Plug</string>
 			<key>type</key>
@@ -54,6 +54,6 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>moninstruments</string>
+	<string></string>
 </dict>
 </plist>

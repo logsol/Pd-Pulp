@@ -3,14 +3,13 @@
 <JUCERPROJECT id="EDfSFF" name="JUCEPureData" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.yourcompany.JUCEPureData" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="0"
-              pluginName="JUCEPureData" pluginDesc="JUCEPureData" pluginManufacturer="moninstruments"
+              pluginName="JUCEPureData" pluginDesc="JUCEPureData" pluginManufacturer=""
               pluginManufacturerCode="Manu" pluginCode="Plug" pluginChannelConfigs="{1, 1}, {2, 2}"
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="JUCEPureDataAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.JUCEPureData"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0"
-              companyName="moninstruments" companyWebsite="www.mominstruments.com"
-              companyEmail="info@o-g-sus.de">
+              companyName="" companyWebsite="" companyEmail="info@o-g-sus.de">
   <MAINGROUP id="bHW1xW" name="JUCEPureData">
     <GROUP id="{F7E3C56F-7CAF-CB35-5672-4BC60FA8EA87}" name="Source">
       <FILE id="i8TxaI" name="PdBase.cpp" compile="1" resource="0" file="Source/PdBase.cpp"/>
@@ -48,20 +47,20 @@
                        libraryPath="/Users/olivergreschke/Documents/JUCEPureData/Source"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_events" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_graphics" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_data_structures" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_gui_basics" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_gui_extra" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_cryptography" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_video" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_opengl" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_audio_basics" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_audio_devices" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_audio_formats" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_audio_processors" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="/Users/olivergreschke/Documents/JUCE-OSX"/>
+        <MODULEPATH id="juce_core" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_events" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_graphics" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_data_structures" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_gui_basics" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_gui_extra" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_cryptography" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_video" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_opengl" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_audio_basics" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_audio_devices" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_audio_formats" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_audio_processors" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="/Users/olivergreschke/Documents/JUCE-OSX/modules/"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
