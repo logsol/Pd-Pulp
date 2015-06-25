@@ -15,10 +15,10 @@ download and install libPD:
 https://github.com/libpd/libpd
 
 
-###- Download our demo project
+###- Download and setup this demo project
 
-In JUCE - go sure that you enter the correct paths in JUCE's Project Settings and Export target settings
+In JUCE - go sure that you enter the correct paths in JUCE's Project Settings and Export target settings.
 
-In Xcode go sure that you link to the correct libPD library (32/64 Bit) and that  the path to the pd demo patch is correct
+In Xcode go sure that you link to the correct libPD library (32/64 Bit) and that  the path to the pd demo patch is correct.
 
 Very helpful for testing: In Xcode edit you "Run Debug" scheme and enter your DAW you are testing with as Executable.
