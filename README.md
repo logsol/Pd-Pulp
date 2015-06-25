@@ -1,21 +1,21 @@
 JuceLibPd
 ==============
 
-##- JUCE Installation:
+###- JUCE Installation:
 
 follow JUCE setup tutorial:
 
 http://www.juce.com/learn/tutorials-code-examples/create-basic-audio-midi-plugin-part-1-setting-up
 
 
-##- LibPD Installation
+###- LibPD Installation
 
 download and install libPD:
 
 https://github.com/libpd/libpd
 
 
-##- Download our demo project
+###- Download our demo project
 
 In JUCE - go sure that you enter the correct paths in JUCE's Project Settings and Export target settings
 
