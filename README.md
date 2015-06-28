@@ -21,6 +21,8 @@ Xcode (MacOSX) -> Debug/Release
 
 Note: If you want to use relative header search paths here, you need to describe it from where the xcode project file is, not the jucer file, as conventionally.
 
+![search-paths-screenshot](https://cloud.githubusercontent.com/assets/692826/8396624/9670e48e-1dae-11e5-9f6c-b87509c16db3.png)
+
 
 ######Change module paths
 
