@@ -13,6 +13,7 @@
 
 #include "PdBase.hpp"
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "FloatParameter.h"
 
 
 //==============================================================================
@@ -24,6 +25,8 @@ public:
     //==============================================================================
     PureDataAudioProcessor();
     ~PureDataAudioProcessor();
+    
+    void setParameterName(int index, String name);
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -58,16 +61,24 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    void reloadPatch(double sampleRate);
 
 private:
     ScopedPointer<pd::PdBase> pd;
     int pos;
+    
+    Array<FloatParameter*> parameterList;
+    
     AudioProcessorParameter* freq;
     AudioProcessorParameter* volume;
     AudioProcessorParameter* del_delay;
     AudioProcessorParameter* del_feedback;
     AudioProcessorParameter* del_mode_rate;
     AudioProcessorParameter* del_mode_depth;
+    
+    
+     
     pd::Patch patch;
     HeapBlock<float> pdInBuffer, pdOutBuffer;
     //==============================================================================

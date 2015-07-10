@@ -8,64 +8,17 @@
   ==============================================================================
 */
 #include "PluginProcessor.h"
-#include "PluginEditor.h"
-
-class FloatParameter : public AudioProcessorParameter
-{
-public:
-
-    FloatParameter (float defaultParameterValue, const String& paramName)
-       : defaultValue (defaultParameterValue),
-         value (defaultParameterValue),
-         name (paramName)
-    {
-    }
-
-    float getValue() const override
-    {
-        return value;
-    }
-
-    void setValue (float newValue) override
-    {
-        value = newValue;
-    }
-
-    float getDefaultValue() const override
-    {
-        return defaultValue;
-    }
-
-    String getName (int maximumStringLength) const override
-    {
-        return name;
-    }
-
-    String getLabel() const override
-    {
-        return String();
-    }
-
-    float getValueForText (const String& text) const override
-    {
-        return text.getFloatValue();
-    }
-
-private:
-    float defaultValue, value;
-    String name;
-};
+#include "MainComponent.h"
 
 
 //==============================================================================
 PureDataAudioProcessor::PureDataAudioProcessor()
 {
-    addParameter (freq = new FloatParameter (440.0f/2000.0f, "Frequency"));
-    addParameter (volume = new FloatParameter (0.2f, "Volume"));
-    addParameter (del_delay = new FloatParameter (0.5f, "Del-Delay"));
-    addParameter (del_feedback = new FloatParameter (0.5f, "Del-Feedback"));
-    addParameter (del_mode_rate = new FloatParameter (0.5f, "Del-Mod-Rate"));
-    addParameter (del_mode_depth = new FloatParameter (0.5f, "Del-Mod-Depth"));
+    for (int i=0; i<10; i++) {
+        FloatParameter* p = new FloatParameter (0.5, ("Param " + (String) (i+1)).toStdString());
+        parameterList.add(p);
+        addParameter(p);
+    }
 }
 
 PureDataAudioProcessor::~PureDataAudioProcessor()
@@ -74,6 +27,13 @@ PureDataAudioProcessor::~PureDataAudioProcessor()
 }
 
 //==============================================================================
+void PureDataAudioProcessor::setParameterName(int index, String name)
+{
+    FloatParameter* p = parameterList.getUnchecked(index -1);
+    p->setName(name);
+}
+
+
 const String PureDataAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -156,16 +116,8 @@ void PureDataAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    pd = new pd::PdBase;
-    pd->init (getNumInputChannels(), getNumOutputChannels(), sampleRate);
-
-    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
-    pdInBuffer.calloc (pd->blockSize() * numChannels);
-    pdOutBuffer.calloc (pd->blockSize() * numChannels);
-    patch = pd->openPatch ("test4.pd", "/Users/olivergreschke/Documents/JUCEPureData/Source");
-    jassert (patch.isValid());
-	
-    pd->computeAudio (true);
+    reloadPatch(sampleRate);
+    
     pos = 0;
 }
 
@@ -196,14 +148,10 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
     int len = buffer.getNumSamples();
     int idx = 0;
     
-    //pd->sendFloat ("freq", freq->getValue() * 2000.0f);
-    //pd->sendFloat ("volume", volume->getValue() * 1.0f);
-    pd->sendFloat ("del_delay", del_delay->getValue() );
-    pd->sendFloat ("del_feedback", del_feedback->getValue() );
-    pd->sendFloat ("del_mod_rate", del_mode_rate->getValue() );
-    pd->sendFloat ("del_mod_depth", del_mode_depth->getValue() );
-    
-    //pd->sendNoteOn(<#const int channel#>, <#const int pitch#>)
+    for (int i=0; i<parameterList.size(); i++) {
+        FloatParameter* parameter = parameterList[i];
+        pd->sendFloat(parameter->getName(300).toStdString(), parameter->getValue());
+    }
     
     MidiMessage message;
     MidiBuffer::Iterator it (midiMessages);
@@ -212,13 +160,12 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
     while (it.getNextEvent (message, samplePosition))
     {
         if (message.isNoteOn (true)) {
-            pd->sendFloat("freq",powf(2.0, (message.getNoteNumber() - 69 ) / 12)*440.0);
             pd->sendNoteOn (message.getChannel(), message.getNoteNumber(), message.getVelocity());
-            pd->sendFloat("volume",message.getVelocity()/128.0f );
         }
         if (message.isNoteOff (true)) {
-            pd->sendFloat("volume",0.0 );
-        }    }
+            pd->sendNoteOn (message.getChannel(), message.getNoteNumber(), 0);
+        }
+    }
     
     while (len > 0)
     {
@@ -251,102 +198,15 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
     }
 }
 
-
-/*
- 
- // Other version of processBlock from Fabian to integrate Midi and to prevent audio buffer underuns ???
- 
- void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
- {
- // In case we have more outputs than inputs, this code clears any output
- // channels that didn't contain input data, (because these aren't
- // guaranteed to be empty - they may contain garbage).
- // I've added this to avoid people getting screaming feedback
- // when they first compile the plugin, but obviously you don't need to
- // this code if your algorithm already fills all the output channels.
- for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
- buffer.clear (i, 0, buffer.getNumSamples());
- 
- int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
- int len = buffer.getNumSamples();
- int idx = 0;
- 
- pd->sendFloat ("freq", freq->getValue() * 2000.0f);
- pd->sendFloat ("volume", volume->getValue() * 1.0f);
- pd->sendFloat ("del_delay", del_delay->getValue() );
- pd->sendFloat ("del_feedback", del_feedback->getValue() );
- pd->sendFloat ("del_mod_rate", del_mode_rate->getValue() );
- pd->sendFloat ("del_mod_depth", del_mode_depth->getValue() );
- 
- MidiMessage message;
- int samplePosition = buffer.getNumSamples();
- MidiBuffer::Iterator it (midiMessages);
- 
- if (! it.getNextEvent (message, samplePosition))
- {
-	samplePosition = buffer.getNumSamples();
- }
- 
- while (len > 0)
- {
-	int max = jmin (len, pd->blockSize());
- 
-	// interleave audio
-	{
- float* dstBuffer = pdInBuffer.getData() + pos;
- const float* srcBuffer = pdOutBuffer.getData() + pos;
- 
- for (int i = 0; i < max; ++i)
- {
- for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
- {
- *dstBuffer++ = buffer.getReadPointer(channelIndex) [idx + i];
- buffer.getWritePointer (channelIndex) [idx + i] = *srcBuffer++;
- }
- }
- pos++;
-	}
- 
-	if (pos >= pd->blockSize())
-	{
- if (idx >= samplePosition && idx <= (samplePosition + pd->blockSize()))
- {
- if (message.isNoteOn (true))
- pd->sendNoteOn (message.getChannel(), message.getNoteNumber(), message.getVelocity());
- else if (message.isController())
- pd->sendControlChange (message.getChannel(), message.getControllerNumber(), message.getControllerValue());
- else if (message.isProgramChange())
- pd->sendProgramChange (message.getChannel(), message.getProgramChangeNumber());
- else if (message.isPitchWheel())
- pd->sendPitchBend (message.getChannel(), message.getPitchWheelValue());
- // TODO add remaining midi types
- 
- if (! it.getNextEvent (message, samplePosition))
- {
- samplePosition = buffer.getNumSamples();
- }
- }
- pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
- pos = 0;
-	}
- 
-	idx += max;
-	len -= max;
- }
- }
- 
- */
-
-
 //==============================================================================
 bool PureDataAudioProcessor::hasEditor() const
 {
-    return false; // (change this to false if you choose to not supply an editor)
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* PureDataAudioProcessor::createEditor()
 {
-    return nullptr;
+    return new MainComponent(*this);
 }
 
 //==============================================================================
@@ -361,6 +221,21 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void PureDataAudioProcessor::reloadPatch (double sampleRate)
+{
+    pd = new pd::PdBase;
+    pd->init (getNumInputChannels(), getNumOutputChannels(), sampleRate);
+    
+    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
+    pdInBuffer.calloc (pd->blockSize() * numChannels);
+    pdOutBuffer.calloc (pd->blockSize() * numChannels);
+    
+    patch = pd->openPatch ("sawsynth.pd", "/Users/logsol/Dropbox/Basteleien/Sound/Pd");
+    jassert (patch.isValid());
+    
+    pd->computeAudio (true);
 }
 
 //==============================================================================
