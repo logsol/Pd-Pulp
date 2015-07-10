@@ -63,6 +63,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void reloadPatch(double sampleRate);
+    void setPatchFile(File file);
 
 private:
     ScopedPointer<pd::PdBase> pd;
@@ -77,10 +78,11 @@ private:
     AudioProcessorParameter* del_mode_rate;
     AudioProcessorParameter* del_mode_depth;
     
-    
+    File patchfile;
      
     pd::Patch patch;
     HeapBlock<float> pdInBuffer, pdOutBuffer;
+    double cachedSampleRate;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PureDataAudioProcessor)
 };

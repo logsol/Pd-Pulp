@@ -73,7 +73,6 @@ private:
     ScopedPointer<SendSlider> sendSlider10;
     ScopedPointer<TextButton> findButton;
     ScopedPointer<Label> pathField;
-    ScopedPointer<Label> pathField2;
 
 
     //==============================================================================

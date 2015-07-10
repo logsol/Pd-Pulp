@@ -225,17 +225,38 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
 
 void PureDataAudioProcessor::reloadPatch (double sampleRate)
 {
+    if (sampleRate) {
+        cachedSampleRate = sampleRate;
+    } else {
+        sampleRate = cachedSampleRate;
+    }
+    
+    if (pd) {
+        pd->computeAudio(false);
+        pd->closePatch(patch);
+    }
+    
     pd = new pd::PdBase;
     pd->init (getNumInputChannels(), getNumOutputChannels(), sampleRate);
     
     int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
     pdInBuffer.calloc (pd->blockSize() * numChannels);
     pdOutBuffer.calloc (pd->blockSize() * numChannels);
-    
-    patch = pd->openPatch ("sawsynth.pd", "/Users/logsol/Dropbox/Basteleien/Sound/Pd");
-    jassert (patch.isValid());
-    
-    pd->computeAudio (true);
+
+    if (patchfile.exists()) {
+        patch = pd->openPatch (patchfile.getFileName().toStdString(), patchfile.getParentDirectory().getFullPathName().toStdString());
+        if (patch.isValid()) {
+            pd->computeAudio (true);
+            std::cout << "computing audio" << std::endl;
+        } else {
+            std::cout << "invalid" << std::endl;
+        }
+    }
+}
+
+void PureDataAudioProcessor::setPatchFile(File file)
+{
+    patchfile = file;
 }
 
 //==============================================================================
