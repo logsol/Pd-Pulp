@@ -66,7 +66,8 @@ SendSlider::SendSlider (int index, AudioProcessor& processor)
 
     //[Constructor] You can add your own custom stuff here..
     PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
-    p.setParameterName(index, "Label " + (String) index);
+    String labelText(p.getParameterName(index-1));
+    label->setText(labelText, dontSendNotification);
     
     startTimer(25);
     //[/Constructor]
@@ -131,7 +132,7 @@ void SendSlider::labelTextChanged (Label* labelThatHasChanged)
     {
         //[UserLabelCode_label] -- add your label text handling code here..
         PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
-        p.setParameterName(index, labelThatHasChanged->getTextValue().toString());
+        p.setParameterName(index-1, labelThatHasChanged->getTextValue().toString());
         //[/UserLabelCode_label]
     }
 

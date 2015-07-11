@@ -57,10 +57,10 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    void changeListenerCallback (ChangeBroadcaster* p);
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextButton> reloadButton;
     ScopedPointer<SendSlider> sendSlider1;
     ScopedPointer<SendSlider> sendSlider2;
     ScopedPointer<SendSlider> sendSlider5;
@@ -73,6 +73,8 @@ private:
     ScopedPointer<SendSlider> sendSlider10;
     ScopedPointer<TextButton> findButton;
     ScopedPointer<Label> pathField;
+    ScopedPointer<TextButton> reloadButton;
+    ScopedPointer<TextButton> editButton;
 
 
     //==============================================================================

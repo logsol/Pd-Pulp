@@ -64,6 +64,7 @@ public:
     
     void reloadPatch(double sampleRate);
     void setPatchFile(File file);
+    File getPatchFile();
 
 private:
     ScopedPointer<pd::PdBase> pd;

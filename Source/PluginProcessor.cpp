@@ -15,7 +15,7 @@
 PureDataAudioProcessor::PureDataAudioProcessor()
 {
     for (int i=0; i<10; i++) {
-        FloatParameter* p = new FloatParameter (0.5, ("Param " + (String) (i+1)).toStdString());
+        FloatParameter* p = new FloatParameter (0.5, ("Param" + (String) (i+1)).toStdString());
         parameterList.add(p);
         addParameter(p);
     }
@@ -29,7 +29,7 @@ PureDataAudioProcessor::~PureDataAudioProcessor()
 //==============================================================================
 void PureDataAudioProcessor::setParameterName(int index, String name)
 {
-    FloatParameter* p = parameterList.getUnchecked(index -1);
+    FloatParameter* p = parameterList.getUnchecked(index);
     p->setName(name);
 }
 
@@ -215,12 +215,102 @@ void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    
+    // STORE / SAVE
+    
+    XmlElement xml(getName());
+
+    // patchfile
+    XmlElement* patchfileElement = new XmlElement("patchfile");
+    patchfileElement->setAttribute("path", patchfile.getParentDirectory().getFullPathName());
+    patchfileElement->setAttribute("fullpath", patchfile.getFullPathName());
+    patchfileElement->setAttribute("filename", patchfile.getFileName());
+    xml.addChildElement(patchfileElement);
+    
+    // parameters
+    XmlElement* parameterListElement = new XmlElement("parameterList");
+    
+    for(size_t i = 0; i < parameterList.size(); ++i) {
+
+        XmlElement* parameterElement = new XmlElement("parameter");
+        FloatParameter* parameter = parameterList[i];
+        parameterElement->setAttribute("index", (int) parameter->getParameterIndex());
+        parameterElement->setAttribute("name", parameter->getName(256));
+        parameterElement->setAttribute("value", (double) parameter->getValue());
+        
+        parameterListElement->addChildElement(parameterElement);
+    }
+    xml.addChildElement(parameterListElement);
+    
+    MemoryOutputStream stream;
+    xml.writeToStream(stream, "");
+    std::cout << "save [" << stream.toString() << "] " << std::endl;
+    
+    copyXmlToBinary(xml, destData);
 }
 
 void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    
+    // RESTORE / LOAD
+
+    ScopedPointer<XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
+    if(xml != 0 && xml->hasTagName(getName())) {
+        
+        MemoryOutputStream stream;
+        xml->writeToStream(stream, "<?xml version=\"1.0\"?>");
+        std::cout << "load [" << stream.toString() << "] " << std::endl;
+
+        forEachXmlChildElement (*xml, child)
+        {
+            std::cout << " - load : " << child->getTagName() << std::endl;
+            if(child->hasTagName("patchfile")) {
+                File path(child->getStringAttribute ("fullpath"));
+                if (path.exists()) {
+                    patchfile = path; // creates a copy
+                    reloadPatch(NULL);
+                } else {
+                    // Todo add exclamation mark or something
+                    std::cout << "cant find " << child->getStringAttribute("fullpath") << std::endl;
+                }
+            }
+            
+            if(child->hasTagName("parameterList")) {
+                forEachXmlChildElement (*child, parameterElement) {
+                    
+                    //std::cout << "loading param " << parameterElement->getStringAttribute("name");
+                    //std::cout << "[" << parameterElement->getIntAttribute("index") << "]: ";
+                    //std::cout << parameterElement->getDoubleAttribute("value") << std::endl;
+                    
+                    setParameter(parameterElement->getIntAttribute("index"), (float) parameterElement->getDoubleAttribute("value"));
+                    setParameterName(parameterElement->getIntAttribute("index"), parameterElement->getStringAttribute("name"));
+                }
+            }
+        }
+    }
+
+    /*
+    ScopedPointer<XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    if(xmlState != 0 && xmlState->hasTagName(getName())) {
+        
+        MemoryOutputStream stream;
+        xmlState->writeToStream(stream, "<?xml version=\"1.0\"?>");
+        std::cout << "load [" << stream.toString() << "] " << std::endl;
+        
+        for(size_t i = 0; i < parameterList.size(); i++) {
+            FloatParameter* parameter = parameterList[i];
+            const String attributeName = parameter->getName(256).toStdString();
+            
+            if(xmlState->hasAttribute(attributeName)) {
+                float value = (float) xmlState->getDoubleAttribute(attributeName);
+                std::cout << "found attribute in xml... [" << attributeName << ": " << value << "] ";
+                parameter->setValue(value);
+            }
+        }
+    }
+     */
 }
 
 void PureDataAudioProcessor::reloadPatch (double sampleRate)
@@ -247,9 +337,9 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
         patch = pd->openPatch (patchfile.getFileName().toStdString(), patchfile.getParentDirectory().getFullPathName().toStdString());
         if (patch.isValid()) {
             pd->computeAudio (true);
-            std::cout << "computing audio" << std::endl;
         } else {
             std::cout << "invalid" << std::endl;
+            // TODO: add a message, exclamation mark or something
         }
     }
 }
@@ -257,6 +347,11 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
 void PureDataAudioProcessor::setPatchFile(File file)
 {
     patchfile = file;
+}
+
+File PureDataAudioProcessor::getPatchFile()
+{
+    return patchfile;
 }
 
 //==============================================================================
