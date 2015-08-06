@@ -23,24 +23,5 @@
     <string></string>
     <key>NSHighResolutionCapable</key>
     <true/>
-    <key>AudioComponents</key>
-    <array>
-      <dict>
-        <key>name</key>
-        <string>: JUCEPureData</string>
-        <key>description</key>
-        <string>JUCEPureData</string>
-        <key>factoryFunction</key>
-        <string>JUCEPureDataAUFactory</string>
-        <key>manufacturer</key>
-        <string>Manu</string>
-        <key>type</key>
-        <string>aumf</string>
-        <key>subtype</key>
-        <string>Plug</string>
-        <key>version</key>
-        <integer>65536</integer>
-      </dict>
-    </array>
   </dict>
 </plist>
