@@ -38,6 +38,7 @@
                                                                     //[/Comments]
 */
 class MainComponent  : public PureDataAudioProcessorEditor,
+                       public Timer,
                        public ButtonListener
 {
 public:
@@ -57,7 +58,7 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    void changeListenerCallback (ChangeBroadcaster* p);
+    void timerCallback();
     //[/UserVariables]
 
     //==============================================================================
@@ -75,6 +76,9 @@ private:
     ScopedPointer<Label> pathField;
     ScopedPointer<TextButton> reloadButton;
     ScopedPointer<TextButton> editButton;
+    ScopedPointer<Label> statusField;
+    ScopedPointer<Label> label;
+    ScopedPointer<Label> label2;
 
 
     //==============================================================================

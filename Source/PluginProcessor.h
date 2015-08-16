@@ -65,6 +65,10 @@ public:
     void reloadPatch(double sampleRate);
     void setPatchFile(File file);
     File getPatchFile();
+    
+    String status = "Select a pure data patch file...";
+    static bool otherInstanceAlreadyRunning;
+    bool isInstanceLocked = false;
 
 private:
     ScopedPointer<pd::PdBase> pd;

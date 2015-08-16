@@ -10,6 +10,7 @@
 #include "PluginProcessor.h"
 #include "MainComponent.h"
 
+bool PureDataAudioProcessor::otherInstanceAlreadyRunning;
 
 //==============================================================================
 PureDataAudioProcessor::PureDataAudioProcessor()
@@ -19,11 +20,20 @@ PureDataAudioProcessor::PureDataAudioProcessor()
         parameterList.add(p);
         addParameter(p);
     }
+    
+    if(PureDataAudioProcessor::otherInstanceAlreadyRunning) {
+        isInstanceLocked = true;
+    }
+    PureDataAudioProcessor::otherInstanceAlreadyRunning = true;
 }
 
 PureDataAudioProcessor::~PureDataAudioProcessor()
 {
     pd = nullptr;
+    
+    if (!isInstanceLocked) {
+        PureDataAudioProcessor::otherInstanceAlreadyRunning = false;
+    }
 }
 
 //==============================================================================
@@ -139,6 +149,10 @@ void PureDataAudioProcessor::releaseResources()
 
 void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
+    if (isInstanceLocked) {
+        return;
+    }
+    
     // In case we have more outputs than inputs, this code clears any output channels that didn't contain input data, (because these aren't guaranteed to be empty - they may contain garbage).
     // I've added this to avoid people getting screaming feedback when they first compile the plugin, but obviously you don't need to this code if your algorithm already fills all the output channels.
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
@@ -294,6 +308,11 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
 
 void PureDataAudioProcessor::reloadPatch (double sampleRate)
 {
+    if (isInstanceLocked) {
+        status = "Currently only one simultaneous instance of this plugin is allowed";
+        return;
+    }
+    
     if (sampleRate) {
         cachedSampleRate = sampleRate;
     } else {
@@ -311,16 +330,31 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
     pdInBuffer.calloc (pd->blockSize() * numChannels);
     pdOutBuffer.calloc (pd->blockSize() * numChannels);
-
-    if (patchfile.exists()) {
-        patch = pd->openPatch (patchfile.getFileName().toStdString(), patchfile.getParentDirectory().getFullPathName().toStdString());
-        if (patch.isValid()) {
-            pd->computeAudio (true);
-        } else {
-            std::cout << "invalid" << std::endl;
-            // TODO: add a message, exclamation mark or something
+    
+    
+    if (!patchfile.exists()) {
+        
+        if (patchfile.getFullPathName().toStdString() != "") {
+            status = "File does not exist";
         }
+        
+        return;
     }
+    
+    if (patchfile.isDirectory()) {
+        status = "You selected a directory";
+        return;
+    }
+    
+    patch = pd->openPatch (patchfile.getFileName().toStdString(), patchfile.getParentDirectory().getFullPathName().toStdString());
+
+    if (patch.isValid()) {
+        pd->computeAudio (true);
+        status = "Patch loaded successfully";
+    } else {
+        status = "Selected patch is not valid, sorry";
+    }
+
 }
 
 void PureDataAudioProcessor::setPatchFile(File file)
