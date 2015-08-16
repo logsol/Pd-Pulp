@@ -9,7 +9,7 @@
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="JUCEPureDataAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.JUCEPureData"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.1"
-              companyName="" companyWebsite="" companyEmail="info@o-g-sus.de">
+              companyName="" companyWebsite="" companyEmail="">
   <MAINGROUP id="bHW1xW" name="JUCEPureData">
     <GROUP id="{F7E3C56F-7CAF-CB35-5672-4BC60FA8EA87}" name="Source">
       <FILE id="gQe1kO" name="SendSlider.cpp" compile="1" resource="0" file="Source/SendSlider.cpp"/>
@@ -43,44 +43,44 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="../SDKs/VST3 SDK" postbuildCommand="&#10;# This script takes the build product and copies it to the AU, VST, VST3, RTAS and AAX folders, depending on &#10;# which plugin types you've built&#10;&#10;original=$CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME&#10;&#10;# this looks inside the binary to detect which platforms are needed.. &#10;copyAU=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'AudioUnit' | wc -l&#96;&#10;copyVST=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'VSTPlugin' | wc -l&#96;&#10;copyVST3=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'GetPluginFactory' | wc -l&#96;&#10;copyRTAS=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'CProcess' | wc -l&#96;&#10;copyAAX=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'ACFStartup' | wc -l&#96;&#10;&#10;if [ $copyAU -gt 0 ]; then&#10;  echo &quot;Copying to AudioUnit folder...&quot;&#10;  AU=~/Library/Audio/Plug-Ins/Components/$PRODUCT_NAME.component&#10;  if [ -d &quot;$AU&quot; ]; then &#10;    rm -r &quot;$AU&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$AU&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$AU/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$AU/Contents/$INFOPLIST_FILE&quot;&#10;&#10;  # Fix info.plist for AUs built with Xcode 3&#10;  if [ -f &quot;$DEVELOPER_DIR/Library/Developer/CoreAudio/AudioUnits/AUPublic/AUBase/AUPlugInDispatch.cpp&quot; ]; then&#10;    echo&#10;  else&#10;    echo &quot;Removing AudioComponents entry from Info.plist because this is not a new-format AU&quot;&#10;    /usr/libexec/PlistBuddy -c &quot;Delete AudioComponents&quot; &quot;$AU/Contents/Info.plist&quot;&#10;  fi&#10;fi&#10;&#10;if [ $copyVST -gt 0 ]; then&#10;  echo &quot;Copying to VST folder...&quot;&#10;  VST=~/Library/Audio/Plug-Ins/VST/$PRODUCT_NAME.vst&#10;  if [ -d &quot;$VST&quot; ]; then &#10;    rm -r &quot;$VST&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$VST&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST/Contents/$INFOPLIST_FILE&quot;&#10;fi&#10;&#10;if [ $copyVST3 -gt 0 ]; then&#10;  echo &quot;Copying to VST3 folder...&quot;&#10;  VST3=~/Library/Audio/Plug-Ins/VST3/$PRODUCT_NAME.vst3&#10;  if [ -d &quot;$VST3&quot; ]; then &#10;    rm -r &quot;$VST3&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$VST3&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST3/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST3/Contents/$INFOPLIST_FILE&quot;&#10;fi&#10;&#10;if [ $copyRTAS -gt 0 ]; then&#10;  echo &quot;Copying to RTAS folder...&quot;&#10;  RTAS=/Library/Application\ Support/Digidesign/Plug-Ins/$PRODUCT_NAME.dpm&#10;  if [ -d &quot;$RTAS&quot; ]; then&#10;    rm -r &quot;$RTAS&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$RTAS&quot;&#10;fi&#10;&#10;if [ $copyAAX -gt 0 ]; then&#10;  echo &quot;Copying to AAX folder...&quot;&#10;&#10;  if [ -d &quot;/Applications/ProTools_3PDev/Plug-Ins&quot; ]; then&#10;    AAX1=&quot;/Applications/ProTools_3PDev/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX1&quot; ]; then&#10;      rm -r &quot;$AAX1&quot;&#10;    fi&#10;&#10;    cp -R -H &quot;$original&quot; &quot;$AAX1&quot;&#10;  fi&#10;&#10;  if [ -d &quot;/Library/Application Support/Avid/Audio/Plug-Ins&quot; ]; then&#10;    AAX2=&quot;/Library/Application Support/Avid/Audio/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX2&quot; ]; then&#10;      rm -r &quot;$AAX2&quot;&#10;    fi&#10;&#10;    cp -R -H &quot;$original&quot; &quot;$AAX2&quot;&#10;  fi&#10;fi&#10;"
-               externalLibraries="pd-osx" vst3Folder="/Applications/Musik/VST3 SDK">
+               externalLibraries="pd-osx" vst3Folder="../SDKs/VST3 SDK">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="32BitUniversal"
-                       isDebug="1" optimisation="1" targetName="JUCEPureData" headerPath="../../../SDKs/libpd/pure-data/src&#10;../../../SDKs/libpd/libpd_wrapper&#10;../../../SDKs/libpd/libpd_wrapper/util"
-                       libraryPath="../../Source"/>
+                       isDebug="1" optimisation="1" targetName="JUCEPureData" headerPath="../../libpd/pure-data/src&#10;../../libpd/libpd_wrapper&#10;../../libpd/libpd_wrapper/util"
+                       libraryPath="../../libpd/"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="32BitUniversal"
-                       isDebug="0" optimisation="2" targetName="JUCEPureData" headerPath="../SDKs/libpd/pure-data/src&#10;../SDKs/libpd/libpd_wrapper&#10;../SDKs/libpd/libpd_wrapper/util"
-                       libraryPath="Source"/>
+                       isDebug="0" optimisation="2" targetName="JUCEPureData" headerPath="../../libpd/pure-data/src&#10;../../libpd/libpd_wrapper&#10;../../libpd/libpd_wrapper/util"
+                       libraryPath="../../libpd/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../Juce/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../Juce/modules"/>
-        <MODULEPATH id="juce_events" path="../Juce/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../Juce/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../Juce/modules"/>
-        <MODULEPATH id="juce_graphics" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../Juce/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../Juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_core" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_events" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_graphics" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JuceLibraryCode/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JuceLibraryCode/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
 </JUCERPROJECT>

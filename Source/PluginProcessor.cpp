@@ -244,7 +244,7 @@ void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
     
     MemoryOutputStream stream;
     xml.writeToStream(stream, "");
-    std::cout << "save [" << stream.toString() << "] " << std::endl;
+    //std::cout << "save [" << stream.toString() << "] " << std::endl;
     
     copyXmlToBinary(xml, destData);
 }
@@ -261,7 +261,7 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
         
         MemoryOutputStream stream;
         xml->writeToStream(stream, "<?xml version=\"1.0\"?>");
-        std::cout << "load [" << stream.toString() << "] " << std::endl;
+        //std::cout << "load [" << stream.toString() << "] " << std::endl;
 
         forEachXmlChildElement (*xml, child)
         {
@@ -290,27 +290,6 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
             }
         }
     }
-
-    /*
-    ScopedPointer<XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
-    if(xmlState != 0 && xmlState->hasTagName(getName())) {
-        
-        MemoryOutputStream stream;
-        xmlState->writeToStream(stream, "<?xml version=\"1.0\"?>");
-        std::cout << "load [" << stream.toString() << "] " << std::endl;
-        
-        for(size_t i = 0; i < parameterList.size(); i++) {
-            FloatParameter* parameter = parameterList[i];
-            const String attributeName = parameter->getName(256).toStdString();
-            
-            if(xmlState->hasAttribute(attributeName)) {
-                float value = (float) xmlState->getDoubleAttribute(attributeName);
-                std::cout << "found attribute in xml... [" << attributeName << ": " << value << "] ";
-                parameter->setValue(value);
-            }
-        }
-    }
-     */
 }
 
 void PureDataAudioProcessor::reloadPatch (double sampleRate)

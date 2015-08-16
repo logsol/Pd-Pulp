@@ -51,6 +51,10 @@
  //#define JUCE_WASAPI
 #endif
 
+#ifndef    JUCE_WASAPI_EXCLUSIVE
+ //#define JUCE_WASAPI_EXCLUSIVE
+#endif
+
 #ifndef    JUCE_DIRECTSOUND
  //#define JUCE_DIRECTSOUND
 #endif
@@ -136,6 +140,10 @@
  //#define JUCE_INCLUDE_ZLIB_CODE
 #endif
 
+#ifndef    JUCE_USE_CURL
+ //#define JUCE_USE_CURL
+#endif
+
 //==============================================================================
 // juce_graphics flags:
 
@@ -209,7 +217,7 @@
  #define JucePlugin_ManufacturerWebsite    ""
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
- #define JucePlugin_ManufacturerEmail      "info@o-g-sus.de"
+ #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
  #define JucePlugin_ManufacturerCode       'Manu'
