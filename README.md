@@ -1,7 +1,17 @@
-JuceLibPd
+
+
+JuceLibPd 
 ==============
 
-This is a barebone juce project that utilizes libpd to be able to use pure data as the sound engine for juce audio plugins.
+This is an audio plugin that enables you to run pd patches inside your DAW. You can use the automation feature of your DAW to control up to 10 parameters of the loaded pd patch.
+
+<a href="https://www.youtube.com/watch?v=TsPwRh1xSps" title="Watch demo video" target="_blank">
+  <img width="418" alt="screen shot 2015-08-07 at 09 45 22" src="https://cloud.githubusercontent.com/assets/692826/9131118/17ce75ba-3ce9-11e5-9419-1867a28902fc.png">
+</a>
+
+The plugin is based on a barebone juce project that utilizes libpd to be able to use pure data as the sound engine for juce audio plugins.
+
+What follows is a description to get the project to compile on your machine. We will also provide downloadable ready-made plugin binaries once we're ready though. 
 
 Although this howto focuses on OSX specific development, you should be able to create Windows and Linux plugins as well. Clone this project, open the introjucer, add a new VisualStudio or Linux Makefile target by right clicking on JucePureData.
 
