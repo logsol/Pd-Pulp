@@ -19,38 +19,15 @@ Although this howto focuses on OSX specific development, you should be able to c
 Make sure your setup is ready to produce VST and/or AudioUnit plugins. If it's not, follow the instructions at the [JUCE plugin setup tutorial](http://www.juce.com/learn/tutorials-code-examples/create-basic-audio-midi-plugin-part-1-setting-up).
 
 ###LibPD Installation
-[LibPD](https://github.com/libpd/libpd) is already included. However, if want to produce 64bit plugins, you need to compile it for the correct architecture and place the libpd-osx.a file in the projects Source folder.
+[LibPD](https://github.com/libpd/libpd) is already included. However, if want to produce 64bit plugins, you need to compile it for the correct architecture and replace the libpd-osx.a file in the projects "libpd" folder.
 
 ###Setting up the Project
-####Introjucer Instructions
 
-Xcode (MacOSX) -> Debug/Release
-
- - Adapt Header Search Paths to where libpd lies
- - Adapt Extra Library Search to Source path of current project
-
-Note: If you want to use relative header search paths here, you need to describe it from where the xcode project file is, not the jucer file, as conventionally.
-
-![search-paths-screenshot](https://cloud.githubusercontent.com/assets/692826/8396624/9670e48e-1dae-11e5-9f6c-b87509c16db3.png)
-
-
-######Change module paths
-
- - click on Modules (red icon)
- - double click juce_audio_basics
- - enter correct module path
- - click on Modules (red icon) again
- - select juce_audio_basics
- - click Set path for all modules…
- - select "copy the paths from the module ‘juce_audio_basics’ to all other modules”
-
-Click on Save Project and Open in Xcode…
-
-######VST creation
+#####VST creation
 Note, that you need to set the path of the vst sdk by clicking on the target Xcode (MacOSX) and enter the path. If the vst path field is missing, it means, that one or more audio plugin specific modules have not been added. Click on modules and add all audio modules.
 
-######Patchfile
+#####Patchfile
 After you successfully compiled it, you should get a Juce Assertion failure, because the patch file cant be loaded - here you need to enter the correct path to the patch file. Since this is a runtime variable, it has to be an absolute path.
 
-######Debugging
+#####Debugging
 In Xcode edit you "Run Debug" scheme and enter your DAW you are testing with as Executable. You can also use Juce PluginHost app from the juce examples folder.   Remember that the DAW software might not find your plugin if it's compiled for an unsuitable architecture.
