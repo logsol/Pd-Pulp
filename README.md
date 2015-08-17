@@ -9,6 +9,11 @@ This is an audio plugin that enables you to run pd patches inside your DAW. You 
   <img width="418" alt="screen shot 2015-08-07 at 09 45 22" src="https://cloud.githubusercontent.com/assets/692826/9131118/17ce75ba-3ce9-11e5-9419-1867a28902fc.png">
 </a>
 
+###Download
+Download the latest version of the plugin from: [Releases](https://github.com/logsol/JuceLibPd/releases)
+
+###About
+
 The plugin is based on a barebone juce project that utilizes libpd to be able to use pure data as the sound engine for juce audio plugins.
 
 What follows is a description to get the project to compile on your machine. We will also provide downloadable ready-made plugin binaries once we're ready though. 
