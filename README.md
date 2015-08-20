@@ -20,6 +20,7 @@ Run pure-data inside VST host applications. An open source plugin created by Kar
 In order to receive parameter changes from the host, two things have to be done:
 - The selected pd patch must have one or more *receive objects* for example [r Cutoff] added
 - The corresponding name (e.g. Cutoff) must be entered in one of the 10 Knob Lables by clicking on them and entering the name
+
 Be aware that " " spaces are not allowed for naming here.
 
 ###The "only 1 instance" issue
