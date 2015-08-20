@@ -27,3 +27,6 @@ It is currently not possible to run multiple instances of the plugin in a DAW. T
 
 ###What about Windows?
 We hope to be able to provide the plugin for other operating systems soon. To stay updated its best to follow our [Facebook page](https://www.facebook.com/pdpulp).
+
+###Bugs & Contributions
+You can report bugs on [Github issues](https://github.com/logsol/Pd-Pulp/issues) or if you don't have a Github account, just comment on [Facebook](https://www.facebook.com/pdpulp). Also code contributions are welcome. If you would like to contribute but need some help getting started, let us know!
