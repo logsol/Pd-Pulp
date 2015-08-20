@@ -1,6 +1,6 @@
 
 
-JuceLibPd 
+Pd Pulp
 ==============
 
 This is an audio plugin that enables you to run pd patches inside your DAW. You can use the automation feature of your DAW to control up to 10 parameters of the loaded pd patch.
@@ -14,25 +14,16 @@ Download the latest version of the plugin from: [Releases](https://github.com/lo
 
 ###About
 
-The plugin is based on a barebone juce project that utilizes libpd to be able to use pure data as the sound engine for juce audio plugins.
+Run pure-data inside VST host applications. An open source plugin created by Karl Pannek and Oliver Greschke, with awesome help from Fabian Renn and Sven Braun.
 
-What follows is a description to get the project to compile on your machine. We will also provide downloadable ready-made plugin binaries once we're ready though. 
+###How to control a pd patch
+In order to receive parameter changes from the host, two things have to be done:
+- The selected pd patch must have one or more *receive objects* for example [r Cutoff] added
+- The corresponding name (e.g. Cutoff) must be entered in one of the 10 Knob Lables by clicking on them and entering the name
+Be aware that " " spaces are not allowed for naming here.
 
-Although this howto focuses on OSX specific development, you should be able to create Windows and Linux plugins as well. Clone this project, open the introjucer, add a new VisualStudio or Linux Makefile target by right clicking on JucePureData.
+###The "only 1 instance" issue
+It is currently not possible to run multiple instances of the plugin in a DAW. This is due to the fact that pure data is written in such a way that currently makes it impossible to run multiple instances. The situation is explained in this [video](https://www.youtube.com/watch?v=1IUEQW0-L5M) 
 
-###JUCE Installation:
-Make sure your setup is ready to produce VST and/or AudioUnit plugins. If it's not, follow the instructions at the [JUCE plugin setup tutorial](http://www.juce.com/learn/tutorials-code-examples/create-basic-audio-midi-plugin-part-1-setting-up).
-
-###LibPD Installation
-[LibPD](https://github.com/libpd/libpd) is already included. However, if want to produce 64bit plugins, you need to compile it for the correct architecture and replace the libpd-osx.a file in the projects "libpd" folder.
-
-###Setting up the Project
-
-#####VST creation
-Note, that you need to set the path of the vst sdk by clicking on the target Xcode (MacOSX) and enter the path. If the vst path field is missing, it means, that one or more audio plugin specific modules have not been added. Click on modules and add all audio modules.
-
-#####Patchfile
-After you successfully compiled it, you should get a Juce Assertion failure, because the patch file cant be loaded - here you need to enter the correct path to the patch file. Since this is a runtime variable, it has to be an absolute path.
-
-#####Debugging
-In Xcode edit you "Run Debug" scheme and enter your DAW you are testing with as Executable. You can also use Juce PluginHost app from the juce examples folder.   Remember that the DAW software might not find your plugin if it's compiled for an unsuitable architecture.
+###What about Windows?
+We hope to be able to provide the plugin for other operating systems soon. To stay updated its best to follow our [Facebook page](https://www.facebook.com/pdpulp).
