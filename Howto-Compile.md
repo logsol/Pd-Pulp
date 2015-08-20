@@ -1,7 +1,5 @@
-Juce - LibPd Demo Project 
+Compiling Instructions for Pd Pulp
 ==============
-
-This is a barebone juce project that utilizes libpd to be able to use pure data as the sound engine for juce audio plugins.
 
 Although this howto focuses on OSX specific development, you should be able to create Windows and Linux plugins as well. Clone this project, open the introjucer, add a new VisualStudio or Linux Makefile target by right clicking on JucePureData.
 
