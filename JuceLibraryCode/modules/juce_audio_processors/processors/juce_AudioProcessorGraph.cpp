@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -977,7 +977,6 @@ bool AudioProcessorGraph::removeNode (const uint32 nodeId)
     {
         if (nodes.getUnchecked(i)->nodeId == nodeId)
         {
-            nodes.getUnchecked(i)->setParentGraph (nullptr);
             nodes.remove (i);
             triggerAsyncUpdate();
 
@@ -1282,6 +1281,8 @@ void AudioProcessorGraph::setPlayHead (AudioPlayHead* audioPlayHead)
 {
     const ScopedLock sl (getCallbackLock());
 
+    AudioProcessor::setPlayHead (audioPlayHead);
+
     for (int i = 0; i < nodes.size(); ++i)
         nodes.getUnchecked(i)->getProcessor()->setPlayHead (audioPlayHead);
 }
@@ -1361,7 +1362,7 @@ void AudioProcessorGraph::AudioGraphIOProcessor::fillInPluginDescription (Plugin
     d.uid = d.name.hashCode();
     d.category = "I/O devices";
     d.pluginFormatName = "Internal";
-    d.manufacturerName = "Raw Material Software";
+    d.manufacturerName = "ROLI Ltd.";
     d.version = "1.0";
     d.isInstrument = false;
 

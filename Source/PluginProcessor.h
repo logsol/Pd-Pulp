@@ -13,6 +13,7 @@
 
 #include "PdBase.hpp"
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "FloatParameter.h"
 
 
 //==============================================================================
@@ -24,6 +25,8 @@ public:
     //==============================================================================
     PureDataAudioProcessor();
     ~PureDataAudioProcessor();
+    
+    void setParameterName(int index, String name);
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -58,18 +61,33 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    void reloadPatch(double sampleRate);
+    void setPatchFile(File file);
+    File getPatchFile();
+    
+    String status = "Select a pure data patch file...";
+    static bool otherInstanceAlreadyRunning;
+    bool isInstanceLocked = false;
 
 private:
     ScopedPointer<pd::PdBase> pd;
     int pos;
+    
+    Array<FloatParameter*> parameterList;
+    
     AudioProcessorParameter* freq;
     AudioProcessorParameter* volume;
     AudioProcessorParameter* del_delay;
     AudioProcessorParameter* del_feedback;
     AudioProcessorParameter* del_mode_rate;
     AudioProcessorParameter* del_mode_depth;
+    
+    File patchfile;
+     
     pd::Patch patch;
     HeapBlock<float> pdInBuffer, pdOutBuffer;
+    double cachedSampleRate;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PureDataAudioProcessor)
 };

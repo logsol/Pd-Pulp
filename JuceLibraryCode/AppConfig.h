@@ -27,15 +27,13 @@
 #define JUCE_MODULE_AVAILABLE_juce_audio_formats            1
 #define JUCE_MODULE_AVAILABLE_juce_audio_plugin_client      1
 #define JUCE_MODULE_AVAILABLE_juce_audio_processors         1
+#define JUCE_MODULE_AVAILABLE_juce_audio_utils              1
 #define JUCE_MODULE_AVAILABLE_juce_core                     1
-#define JUCE_MODULE_AVAILABLE_juce_cryptography             1
 #define JUCE_MODULE_AVAILABLE_juce_data_structures          1
 #define JUCE_MODULE_AVAILABLE_juce_events                   1
 #define JUCE_MODULE_AVAILABLE_juce_graphics                 1
 #define JUCE_MODULE_AVAILABLE_juce_gui_basics               1
 #define JUCE_MODULE_AVAILABLE_juce_gui_extra                1
-#define JUCE_MODULE_AVAILABLE_juce_opengl                   1
-#define JUCE_MODULE_AVAILABLE_juce_video                    1
 
 //==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
@@ -142,6 +140,10 @@
  //#define JUCE_INCLUDE_ZLIB_CODE
 #endif
 
+#ifndef    JUCE_USE_CURL
+ //#define JUCE_USE_CURL
+#endif
+
 //==============================================================================
 // juce_graphics flags:
 
@@ -183,25 +185,6 @@
  //#define JUCE_ENABLE_LIVE_CONSTANT_EDITOR
 #endif
 
-//==============================================================================
-// juce_video flags:
-
-#ifndef    JUCE_DIRECTSHOW
- //#define JUCE_DIRECTSHOW
-#endif
-
-#ifndef    JUCE_MEDIAFOUNDATION
- //#define JUCE_MEDIAFOUNDATION
-#endif
-
-#ifndef    JUCE_QUICKTIME
- #define   JUCE_QUICKTIME 0
-#endif
-
-#ifndef    JUCE_USE_CAMERA
- //#define JUCE_USE_CAMERA
-#endif
-
 
 //==============================================================================
 // Audio plugin settings..
@@ -222,25 +205,25 @@
  #define JucePlugin_Build_AAX              0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "JUCEPureData"
+ #define JucePlugin_Name                   "Pd Pulp"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "JUCEPureData"
+ #define JucePlugin_Desc                   "a pure data audio plugin runtime environment"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           ""
+ #define JucePlugin_Manufacturer           "Audiosalt"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
- #define JucePlugin_ManufacturerWebsite    ""
+ #define JucePlugin_ManufacturerWebsite    "audiosalt.com"
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'Manu'
+ #define JucePlugin_ManufacturerCode       'ASLT'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'Plug'
+ #define JucePlugin_PluginCode             'PDLP'
 #endif
 #ifndef  JucePlugin_MaxNumInputChannels
  #define JucePlugin_MaxNumInputChannels    2
@@ -252,7 +235,7 @@
  #define JucePlugin_PreferredChannelConfigurations  {1, 1}, {2, 2}
 #endif
 #ifndef  JucePlugin_IsSynth
- #define JucePlugin_IsSynth                0
+ #define JucePlugin_IsSynth                1
 #endif
 #ifndef  JucePlugin_WantsMidiInput
  #define JucePlugin_WantsMidiInput         1
@@ -264,7 +247,7 @@
  #define JucePlugin_SilenceInProducesSilenceOut  0
 #endif
 #ifndef  JucePlugin_EditorRequiresKeyboardFocus
- #define JucePlugin_EditorRequiresKeyboardFocus  0
+ #define JucePlugin_EditorRequiresKeyboardFocus  1
 #endif
 #ifndef  JucePlugin_Version
  #define JucePlugin_Version                1.0.0
@@ -279,28 +262,28 @@
  #define JucePlugin_VSTUniqueID            JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_VSTCategory
- #define JucePlugin_VSTCategory            kPlugCategEffect
+ #define JucePlugin_VSTCategory            kPlugCategSynth
 #endif
 #ifndef  JucePlugin_AUMainType
- #define JucePlugin_AUMainType             kAudioUnitType_MusicEffect
+ #define JucePlugin_AUMainType             kAudioUnitType_MusicDevice
 #endif
 #ifndef  JucePlugin_AUSubType
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         JUCEPureDataAU
+ #define JucePlugin_AUExportPrefix         PdPulpAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "JUCEPureDataAU"
+ #define JucePlugin_AUExportPrefixQuoted   "PdPulpAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.yourcompany.JUCEPureData
+ #define JucePlugin_CFBundleIdentifier     com.audiosalt.pdpulp
 #endif
 #ifndef  JucePlugin_RTASCategory
- #define JucePlugin_RTASCategory           ePlugInCategory_None
+ #define JucePlugin_RTASCategory           ePlugInCategory_SWGenerators
 #endif
 #ifndef  JucePlugin_RTASManufacturerCode
  #define JucePlugin_RTASManufacturerCode   JucePlugin_ManufacturerCode
@@ -315,7 +298,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.JUCEPureData
+ #define JucePlugin_AAXIdentifier          com.audiosalt.pdpulp
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode

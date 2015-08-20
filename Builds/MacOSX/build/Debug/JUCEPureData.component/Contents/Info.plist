@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>JUCEPureData</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.JUCEPureData</string>
+	<string>com.audiosalt.pdpulp</string>
 	<key>CFBundleName</key>
-	<string>JUCEPureData</string>
+	<string>PdPulp</string>
 	<key>CFBundlePackageType</key>
 	<string>TDMw</string>
 	<key>CFBundleShortVersionString</key>
