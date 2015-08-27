@@ -12,6 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "PdBase.hpp"
+#include "Receiver.h"
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "FloatParameter.h"
 
@@ -65,24 +66,20 @@ public:
     void reloadPatch(double sampleRate);
     void setPatchFile(File file);
     File getPatchFile();
+    Array<FloatParameter*> getParameterList();
+    
     
     String status = "Select a pure data patch file...";
     static bool otherInstanceAlreadyRunning;
     bool isInstanceLocked = false;
+    Receiver receiver;
 
 private:
     ScopedPointer<pd::PdBase> pd;
     int pos;
     
-    Array<FloatParameter*> parameterList;
-    
-    AudioProcessorParameter* freq;
-    AudioProcessorParameter* volume;
-    AudioProcessorParameter* del_delay;
-    AudioProcessorParameter* del_feedback;
-    AudioProcessorParameter* del_mode_rate;
-    AudioProcessorParameter* del_mode_depth;
-    
+    Array<FloatParameter*> parameterList; // no owned array because values are already owned by parent processor
+    AudioPlayHead::CurrentPositionInfo positionInfo;
     File patchfile;
      
     pd::Patch patch;

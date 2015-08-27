@@ -1,11 +1,12 @@
 dependencies: \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PluginProcessor.cpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PluginProcessor.h \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdBase.hpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdReceiver.hpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdTypes.hpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdMidiReceiver.hpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/../JuceLibraryCode/JuceHeader.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PluginProcessor.cpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PluginProcessor.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdBase.hpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdReceiver.hpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdTypes.hpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdMidiReceiver.hpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/Receiver.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/../JuceLibraryCode/JuceHeader.h \
   ../../JuceLibraryCode/AppConfig.h \
   ../../JuceLibraryCode/modules/juce_audio_basics/juce_audio_basics.h \
   ../../JuceLibraryCode/modules/juce_audio_basics/../juce_core/juce_core.h \
@@ -417,7 +418,8 @@ dependencies: \
   ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_WebBrowserComponent.h \
   ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_LiveConstantEditor.h \
   ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_AnimatedAppComponent.h \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/FloatParameter.h \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/MainComponent.h \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PluginEditor.h \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/SendSlider.h
+  /Users/logsol/Work/projects/c++/PdPulp/Source/FloatParameter.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/SliderConfig.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/MainComponent.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PluginEditor.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/SendSlider.h

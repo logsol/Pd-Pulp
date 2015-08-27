@@ -12,6 +12,7 @@
 #define FLOATPARAMETER_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "SliderConfig.h"
 
 class FloatParameter : public AudioProcessorParameter
 {
@@ -59,9 +60,15 @@ public:
         return text.getFloatValue();
     }
     
+    SliderConfig getSliderConfig ()
+    {
+        return sliderConfig;
+    }
+    
 private:
     float defaultValue, value;
     String name;
+    SliderConfig sliderConfig;
 };
 
 

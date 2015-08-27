@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.1
+  Created with Introjucer version: 3.2.0
 
   ------------------------------------------------------------------------------
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright 2004-13 by Raw Material Software Ltd.
+  Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
 */
@@ -84,7 +84,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     statusField->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (label = new Label ("new label",
-                                          TRANS("PD Pulp")));
+                                          TRANS("Pd Pulp")));
     label->setFont (Font ("DIN Alternate", 29.20f, Font::bold));
     label->setJustificationType (Justification::topLeft);
     label->setEditable (false, false, false);
@@ -101,6 +101,15 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     label2->setColour (TextEditor::textColourId, Colours::black);
     label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (version = new Label ("new label",
+                                            TRANS("v0.0.0")));
+    version->setFont (Font (10.00f, Font::italic));
+    version->setJustificationType (Justification::bottomRight);
+    version->setEditable (false, false, false);
+    version->setColour (Label::textColourId, Colour (0x46ffffff));
+    version->setColour (TextEditor::textColourId, Colours::black);
+    version->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -109,11 +118,29 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
 
 
     //[Constructor] You can add your own custom stuff here..
+    String versionStr;
+    versionStr << "v" << JucePlugin_VersionString;
+    version->setText(versionStr, dontSendNotification);
+
     PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
     pathField->setText(p.getPatchFile().getFileName(), dontSendNotification);
-
+    
+    p.receiver.addActionListener(sendSlider1);
+    /*
+    p.receiver.addActionListener(sendSlider2);
+    p.receiver.addActionListener(sendSlider3);
+    p.receiver.addActionListener(sendSlider4);
+    p.receiver.addActionListener(sendSlider5);
+    p.receiver.addActionListener(sendSlider6);
+    p.receiver.addActionListener(sendSlider7);
+    p.receiver.addActionListener(sendSlider8);
+    p.receiver.addActionListener(sendSlider9);
+    p.receiver.addActionListener(sendSlider10);
+*/
+    
+    
+    
     startTimer(25);
-
     //[/Constructor]
 }
 
@@ -139,6 +166,7 @@ MainComponent::~MainComponent()
     statusField = nullptr;
     label = nullptr;
     label2 = nullptr;
+    version = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -179,6 +207,7 @@ void MainComponent::resized()
     statusField->setBounds (25, 91, 311, 17);
     label->setBounds (22, 16, 170, 32);
     label2->setBounds (168, 24, 304, 16);
+    version->setBounds (392, 34, 80, 16);
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
@@ -303,7 +332,7 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="11" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="4f92306c17723f92" memberName="label" virtualName=""
          explicitFocusOrder="0" pos="22 16 170 32" textCol="ffffffff"
-         edTextCol="ff000000" edBkgCol="0" labelText="PD Pulp" editableSingleClick="0"
+         edTextCol="ff000000" edBkgCol="0" labelText="Pd Pulp" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="DIN Alternate"
          fontsize="29.199999999999999289" bold="1" italic="0" justification="9"/>
   <LABEL name="new label" id="eb75ff4acec7a7ab" memberName="label2" virtualName=""
@@ -311,6 +340,11 @@ BEGIN_JUCER_METADATA
          edTextCol="ff000000" edBkgCol="0" labelText="a pure data audio plugin runtime environment"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="14" bold="0" italic="1" justification="18"/>
+  <LABEL name="new label" id="4479dbe59f1893ef" memberName="version" virtualName=""
+         explicitFocusOrder="0" pos="392 34 80 16" textCol="46ffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="v0.0.0" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="10" bold="0" italic="1" justification="18"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

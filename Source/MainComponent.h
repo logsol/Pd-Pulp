@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.1
+  Created with Introjucer version: 3.2.0
 
   ------------------------------------------------------------------------------
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright 2004-13 by Raw Material Software Ltd.
+  Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
 */
@@ -54,8 +54,6 @@ public:
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
 
-
-
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     void timerCallback();
@@ -79,6 +77,7 @@ private:
     ScopedPointer<Label> statusField;
     ScopedPointer<Label> label;
     ScopedPointer<Label> label2;
+    ScopedPointer<Label> version;
 
 
     //==============================================================================

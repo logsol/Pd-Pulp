@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.1
+  Created with Introjucer version: 3.2.0
 
   ------------------------------------------------------------------------------
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright 2004-13 by Raw Material Software Ltd.
+  Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
 */
@@ -42,7 +42,10 @@ SendSlider::SendSlider (int index, AudioProcessor& processor)
     slider->setColour (Slider::thumbColourId, Colour (0xff5c5c5c));
     slider->setColour (Slider::rotarySliderFillColourId, Colour (0x7fdddddd));
     slider->setColour (Slider::rotarySliderOutlineColourId, Colour (0x66e6e6e6));
-    slider->setColour (Slider::textBoxHighlightColourId, Colour (0x40a6a6a6));
+    slider->setColour (Slider::textBoxTextColourId, Colour (0xffc1c1c1));
+    slider->setColour (Slider::textBoxBackgroundColourId, Colour (0x1effffff));
+    slider->setColour (Slider::textBoxHighlightColourId, Colour (0x4ba6a6a6));
+    slider->setColour (Slider::textBoxOutlineColourId, Colour (0x00808080));
     slider->addListener (this);
 
     addAndMakeVisible (label = new Label ("label",
@@ -55,6 +58,7 @@ SendSlider::SendSlider (int index, AudioProcessor& processor)
     label->setColour (Label::textColourId, Colour (0xffc4c4c4));
     label->setColour (TextEditor::textColourId, Colour (0xffe9e9e9));
     label->setColour (TextEditor::backgroundColourId, Colour (0x00343434));
+    label->setColour (TextEditor::highlightColourId, Colour (0x61ffffff));
     label->addListener (this);
 
 
@@ -68,7 +72,7 @@ SendSlider::SendSlider (int index, AudioProcessor& processor)
     PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
     String labelText(p.getParameterName(index-1));
     label->setText(labelText, dontSendNotification);
-    
+
     startTimer(25);
     //[/Constructor]
 }
@@ -147,6 +151,23 @@ void SendSlider::timerCallback()
 {
     slider->setValue(processor.getParameter(index-1), NotificationType::dontSendNotification);
 }
+
+void SendSlider::actionListenerCallback (const String& message)
+{
+    std::cout << "message: " << message << std::endl;
+    /*
+    String mes = message;
+    StringArray sa;
+    
+    sa.fromTokens(mes, " ", "\"");
+     */
+
+    
+    
+    //label->setText(sa[0], sendNotificationAsync);
+    //slider->setValue(, sendNotificationAsync);
+}
+
 //[/MiscUserCode]
 
 
@@ -160,22 +181,24 @@ void SendSlider::timerCallback()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="SendSlider" componentName=""
-                 parentClasses="public Component, public Timer" constructorParams="int index, AudioProcessor&amp; processor"
+                 parentClasses="public Component, public Timer, public ActionListener"
+                 constructorParams="int index, AudioProcessor&amp; processor"
                  variableInitialisers="index(index),&#10;processor(processor)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="100" initialHeight="130">
   <BACKGROUND backgroundColour="ffffff"/>
   <SLIDER name="slider" id="a814494a82a416fe" memberName="slider" virtualName=""
           explicitFocusOrder="0" pos="14 35 71 80" thumbcol="ff5c5c5c"
-          rotarysliderfill="7fdddddd" rotaryslideroutline="66e6e6e6" textboxhighlight="40a6a6a6"
+          rotarysliderfill="7fdddddd" rotaryslideroutline="66e6e6e6" textboxtext="ffc1c1c1"
+          textboxbkgd="1effffff" textboxhighlight="4ba6a6a6" textboxoutline="808080"
           min="0" max="1" int="0" style="RotaryVerticalDrag" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="label" id="6f4900c890043ea2" memberName="label" virtualName=""
          explicitFocusOrder="0" pos="-4 5 104 24" tooltip="Click to set the name of the corresponding Pure Data receive port."
          bkgCol="404040" textCol="ffc4c4c4" edTextCol="ffe9e9e9" edBkgCol="343434"
-         labelText="Label" editableSingleClick="1" editableDoubleClick="1"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         hiliteCol="61ffffff" labelText="Label" editableSingleClick="1"
+         editableDoubleClick="1" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

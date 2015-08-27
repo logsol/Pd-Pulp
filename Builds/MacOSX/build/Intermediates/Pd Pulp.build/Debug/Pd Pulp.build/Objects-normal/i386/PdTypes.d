@@ -1,3 +1,2 @@
-dependencies: \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdTypes.cpp \
-  /Users/logsol/Work/projects/c++/JuceLibPd/Source/PdTypes.hpp
+dependencies: /Users/logsol/Work/projects/c++/PdPulp/Source/PdTypes.cpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdTypes.hpp

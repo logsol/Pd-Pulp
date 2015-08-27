@@ -13,7 +13,7 @@
 bool PureDataAudioProcessor::otherInstanceAlreadyRunning;
 
 //==============================================================================
-PureDataAudioProcessor::PureDataAudioProcessor()
+PureDataAudioProcessor::PureDataAudioProcessor() : receiver(&parameterList)
 {
     for (int i=0; i<10; i++) {
         FloatParameter* p = new FloatParameter (0.5, ("Param" + (String) (i+1)).toStdString());
@@ -153,10 +153,24 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         return;
     }
     
-    // In case we have more outputs than inputs, this code clears any output channels that didn't contain input data, (because these aren't guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback when they first compile the plugin, but obviously you don't need to this code if your algorithm already fills all the output channels.
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+    pd->receiveMessages();
+    
+    // Send host info messages
+    {
+        AudioPlayHead::CurrentPositionInfo info;
+        getPlayHead()->getCurrentPosition(info);
+        if (positionInfo.isPlaying != info.isPlaying) {
+            pd->sendMessage("hostIsPlaying", info.isPlaying ? "true" : "false");
+        }
+        if (positionInfo.bpm != info.bpm) {
+            pd->sendFloat("hostBpm", (float) info.bpm);
+        }
+        positionInfo = info;
+    }
+    
+    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i) {
         buffer.clear (i, 0, buffer.getNumSamples());
+    }
     
     int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
     int len = buffer.getNumSamples();
@@ -232,7 +246,7 @@ void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
     
     // STORE / SAVE
     
-    XmlElement xml(getName());
+    XmlElement xml(getName().replace(" ", "-"));
 
     // patchfile
     XmlElement* patchfileElement = new XmlElement("patchfile");
@@ -271,7 +285,7 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
     // RESTORE / LOAD
 
     ScopedPointer<XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
-    if(xml != 0 && xml->hasTagName(getName())) {
+    if(xml != 0 && xml->hasTagName(getName().replace(" ", "-"))) {
         
         MemoryOutputStream stream;
         xml->writeToStream(stream, "<?xml version=\"1.0\"?>");
@@ -279,15 +293,12 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
 
         forEachXmlChildElement (*xml, child)
         {
-            std::cout << " - load : " << child->getTagName() << std::endl;
+            //std::cout << " - load : " << child->getTagName() << std::endl;
             if(child->hasTagName("patchfile")) {
                 File path(child->getStringAttribute ("fullpath"));
                 if (path.exists()) {
                     patchfile = path; // creates a copy
                     reloadPatch(NULL);
-                } else {
-                    // Todo add exclamation mark or something
-                    std::cout << "cant find " << child->getStringAttribute("fullpath") << std::endl;
                 }
             }
             
@@ -331,6 +342,16 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     pdInBuffer.calloc (pd->blockSize() * numChannels);
     pdOutBuffer.calloc (pd->blockSize() * numChannels);
     
+    // subscribe before openpatch, to be ready at loadbang time
+    pd->setReceiver(&receiver);
+    pd->unsubscribeAll();
+    
+    for (int i=0; i < parameterList.size(); i++) {
+        String identifier;
+        identifier << receiver.paramIdentifier << i;
+        pd->subscribe(identifier.toStdString());
+    }
+    
     
     if (!patchfile.exists()) {
         
@@ -352,7 +373,7 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
         pd->computeAudio (true);
         status = "Patch loaded successfully";
     } else {
-        status = "Selected patch is not valid, sorry";
+        status = "Selected patch is not valid";
     }
 
 }
@@ -365,6 +386,11 @@ void PureDataAudioProcessor::setPatchFile(File file)
 File PureDataAudioProcessor::getPatchFile()
 {
     return patchfile;
+}
+
+Array<FloatParameter*> PureDataAudioProcessor::getParameterList()
+{
+    return parameterList;
 }
 
 //==============================================================================
