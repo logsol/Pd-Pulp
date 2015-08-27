@@ -232,7 +232,7 @@ void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
     
     // STORE / SAVE
     
-    XmlElement xml(getName());
+    XmlElement xml(getName().replace(" ", "-"));
 
     // patchfile
     XmlElement* patchfileElement = new XmlElement("patchfile");
@@ -271,7 +271,7 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
     // RESTORE / LOAD
 
     ScopedPointer<XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
-    if(xml != 0 && xml->hasTagName(getName())) {
+    if(xml != 0 && xml->hasTagName(getName().replace(" ", "-"))) {
         
         MemoryOutputStream stream;
         xml->writeToStream(stream, "<?xml version=\"1.0\"?>");
