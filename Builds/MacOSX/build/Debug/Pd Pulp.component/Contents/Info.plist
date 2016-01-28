@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>Pd Pulp</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.audiosalt.pdpulp</string>
+	<string>com.audiosalt.pdpulpfx</string>
 	<key>CFBundleName</key>
-	<string>Pd Pulp</string>
+	<string>Pd Pulp FX</string>
 	<key>CFBundlePackageType</key>
 	<string>TDMw</string>
 	<key>CFBundleShortVersionString</key>
