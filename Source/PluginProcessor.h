@@ -73,8 +73,10 @@ public:
     static bool otherInstanceAlreadyRunning;
     bool isInstanceLocked = false;
     Receiver receiver;
+    bool patchLoadError = false;
 
 private:
+    void resetSliderConfigs();
     ScopedPointer<pd::PdBase> pd;
     int pos;
     

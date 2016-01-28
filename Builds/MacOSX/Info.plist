@@ -8,17 +8,17 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.audiosalt.pdpulp</string>
+    <string>com.audiosalt.pdpulpfx</string>
     <key>CFBundleName</key>
-    <string>Pd Pulp</string>
+    <string>Pd Pulp FX</string>
     <key>CFBundlePackageType</key>
     <string>TDMw</string>
     <key>CFBundleSignature</key>
     <string>PTul</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1.1</string>
+    <string>0.2.0</string>
     <key>CFBundleVersion</key>
-    <string>0.1.1</string>
+    <string>0.2.0</string>
     <key>NSHumanReadableCopyright</key>
     <string>Audiosalt</string>
     <key>NSHighResolutionCapable</key>

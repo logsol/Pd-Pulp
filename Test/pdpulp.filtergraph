@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FILTERGRAPH>
+  <FILTER uid="1" x="0.5" y="0.1" uiLastX="" uiLastY="">
+    <PLUGIN name="Audio Input" descriptiveName="" format="Internal" category="I/O devices"
+            manufacturer="Raw Material Software" version="1.0" file="" uid="246006c0"
+            isInstrument="0" fileTime="0" numInputs="0" numOutputs="2" isShell="0"/>
+    <STATE>0.</STATE>
+  </FILTER>
+  <FILTER uid="2" x="0.25" y="0.1" uiLastX="" uiLastY="">
+    <PLUGIN name="Midi Input" descriptiveName="" format="Internal" category="I/O devices"
+            manufacturer="Raw Material Software" version="1.0" file="" uid="cb5fde0b"
+            isInstrument="0" fileTime="0" numInputs="0" numOutputs="0" isShell="0"/>
+    <STATE>0.</STATE>
+  </FILTER>
+  <FILTER uid="3" x="0.5" y="0.9" uiLastX="" uiLastY="">
+    <PLUGIN name="Audio Output" descriptiveName="" format="Internal" category="I/O devices"
+            manufacturer="Raw Material Software" version="1.0" file="" uid="724248cb"
+            isInstrument="0" fileTime="0" numInputs="2" numOutputs="0" isShell="0"/>
+    <STATE>0.</STATE>
+  </FILTER>
+  <FILTER uid="4" x="0.451562" y="0.532562" uiLastX="318" uiLastY="244">
+    <PLUGIN name="Pd Pulp" format="VST" category="Synth" manufacturer="Audiosalt"
+            version="V2.0" file="/Users/logsol/Library/Audio/Plug-Ins/VST/Pd Pulp.vst"
+            uid="50444c50" isInstrument="1" fileTime="15289491470" numInputs="2"
+            numOutputs="2" isShell="0"/>
+    <STATE>887.K41XCA.....ZCIjQ....A.EQLAE....E....A.............................................................................................................................................................................f.Wa0PxDhyB...7.EYs.UcrAmO7.WXzMFZlkFakABbgQGZ8HxKUMWYxM2Kr81Yy8FauPjbuAmXug2KBE1bzUFakkVYt8xTuUmaj8BTjIBHlUGarAWXzgVOh7RUyUlby8Bauc1buw1KDI2avI1a38hPgMGckwVYoUlauL0a04FYu.EYuLWX2MWdtQGZt.GYh.hYowVYtEVak0iHyE1cykmazglKvQlHu3COvElbg0VYzUlbLk1bz4COvElbg0VYzUlbfjlajUFd8HBLh.hag0VY8HBTgIWXsEiHfXWXrUWY8HBLtTSMvDCN2TiL3DyLyLSNxLyLyjCNh7hO7.WXxEVakQWYxARZtQVY30iHwHBHtEVak0iHPElbg0lLh.hcgwVck0iHv3BMzbyL0jyL3LSLvXiLyDiM3jCM0HxK9vCbgIWXsUFckIGHo4FYkgWOhHiHf3VXsUVOh.UXxEVayHBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhLiHf3VXsUVOh.UXxEVazHBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhPiHf3VXsUVOh.UXxEVa0HBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhTiHf3VXsUVOh.UXxEVa1HBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhXiHf3VXsUVOh.UXxEVa2HBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhbiHf3VXsUVOh.UXxEVa3HBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhfiHf3VXsUVOh.UXxEVa4HBH1EFa0UVOh.iK0HxK9vCbgIWXsUFckIGHo4FYkgWOhjiHf3VXsUVOh.UXxEVaw.iHfXWXrUWY8HBLtTiHu3COu.WXxEVakQWYxwTZyQmO77BTj0BT0wFb9..</STATE>
+  </FILTER>
+  <CONNECTION srcFilter="2" srcChannel="4096" dstFilter="4" dstChannel="4096"/>
+  <CONNECTION srcFilter="4" srcChannel="0" dstFilter="3" dstChannel="0"/>
+  <CONNECTION srcFilter="4" srcChannel="1" dstFilter="3" dstChannel="1"/>
+</FILTERGRAPH>

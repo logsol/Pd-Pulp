@@ -17,12 +17,11 @@ class SliderConfig {
     
 public:
 
-    String name;
+    std::string name = "Param";
     float defaultValue = 0.5;
     float max = 1;
     float min = 0;
-    float stepSize;
-    bool lockLabel = false;
+    float stepSize = 0.0;
     bool dirty = false;
 };
 

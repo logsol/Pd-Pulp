@@ -13,7 +13,7 @@
 bool PureDataAudioProcessor::otherInstanceAlreadyRunning;
 
 //==============================================================================
-PureDataAudioProcessor::PureDataAudioProcessor() : receiver(&parameterList)
+PureDataAudioProcessor::PureDataAudioProcessor() : receiver(&parameterList, this)
 {
     for (int i=0; i<10; i++) {
         FloatParameter* p = new FloatParameter (0.5, ("Param" + (String) (i+1)).toStdString());
@@ -324,6 +324,8 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
         return;
     }
     
+    resetSliderConfigs();
+    
     if (sampleRate) {
         cachedSampleRate = sampleRate;
     } else {
@@ -346,7 +348,7 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     pd->setReceiver(&receiver);
     pd->unsubscribeAll();
     
-    for (int i=0; i < parameterList.size(); i++) {
+    for (int i=1; i <= parameterList.size(); i++) {
         String identifier;
         identifier << receiver.paramIdentifier << i;
         pd->subscribe(identifier.toStdString());
@@ -354,11 +356,7 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     
     
     if (!patchfile.exists()) {
-        
-        if (patchfile.getFullPathName().toStdString() != "") {
-            status = "File does not exist";
-        }
-        
+        status = "File does not exist";
         return;
     }
     
@@ -371,11 +369,30 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
 
     if (patch.isValid()) {
         pd->computeAudio (true);
-        status = "Patch loaded successfully";
+        if(!patchLoadError) {
+            status = "Patch loaded successfully";
+        }
+        patchLoadError = false;
     } else {
         status = "Selected patch is not valid";
     }
 
+}
+
+void PureDataAudioProcessor::resetSliderConfigs()
+{
+    SliderConfig def;
+    
+    for (int i=0; i < parameterList.size(); i++) {
+        FloatParameter* p = parameterList.getUnchecked(i);
+        SliderConfig* s = p->getSliderConfig();
+        
+        s->max = def.max;
+        s->min = def.min;
+        s->defaultValue = def.defaultValue;
+        s->name = def.name + std::to_string(i+1);
+        s->dirty = def.dirty;
+    }
 }
 
 void PureDataAudioProcessor::setPatchFile(File file)

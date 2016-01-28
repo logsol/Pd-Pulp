@@ -28,7 +28,7 @@
 
 //==============================================================================
 MainComponent::MainComponent (PureDataAudioProcessor& processor)
-    : PureDataAudioProcessorEditor(processor)
+    : PureDataAudioProcessorEditor(processor), p(&processor)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -118,25 +118,14 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
 
 
     //[Constructor] You can add your own custom stuff here..
+    
     String versionStr;
     versionStr << "v" << JucePlugin_VersionString;
     version->setText(versionStr, dontSendNotification);
 
     PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
     pathField->setText(p.getPatchFile().getFileName(), dontSendNotification);
-    
-    p.receiver.addActionListener(sendSlider1);
-    /*
-    p.receiver.addActionListener(sendSlider2);
-    p.receiver.addActionListener(sendSlider3);
-    p.receiver.addActionListener(sendSlider4);
-    p.receiver.addActionListener(sendSlider5);
-    p.receiver.addActionListener(sendSlider6);
-    p.receiver.addActionListener(sendSlider7);
-    p.receiver.addActionListener(sendSlider8);
-    p.receiver.addActionListener(sendSlider9);
-    p.receiver.addActionListener(sendSlider10);
-*/
+
     
     
     
@@ -257,8 +246,7 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void MainComponent::timerCallback()
 {
-    PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
-    statusField->setText(p.status, dontSendNotification);
+    statusField->setText(p->status, dontSendNotification);
 }
 //[/MiscUserCode]
 

@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 4.1.0
 
   ------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-SendSlider::SendSlider (int index, AudioProcessor& processor)
+SendSlider::SendSlider (int index, PureDataAudioProcessor& processor)
     : index(index),
       processor(processor)
 {
@@ -72,6 +72,11 @@ SendSlider::SendSlider (int index, AudioProcessor& processor)
     PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
     String labelText(p.getParameterName(index-1));
     label->setText(labelText, dontSendNotification);
+
+    SliderConfig* sc = processor.getParameterList().getUnchecked(index-1)->getSliderConfig();
+    slider->setDoubleClickReturnValue(true, sc->defaultValue);
+    slider->setRange(sc->min, sc->max, sc->stepSize);
+    slider->setValue(sc->defaultValue);
 
     startTimer(25);
     //[/Constructor]
@@ -150,22 +155,18 @@ void SendSlider::labelTextChanged (Label* labelThatHasChanged)
 void SendSlider::timerCallback()
 {
     slider->setValue(processor.getParameter(index-1), NotificationType::dontSendNotification);
-}
 
-void SendSlider::actionListenerCallback (const String& message)
-{
-    std::cout << "message: " << message << std::endl;
-    /*
-    String mes = message;
-    StringArray sa;
+    SliderConfig* sc = processor.getParameterList().getUnchecked(index-1)->getSliderConfig();
     
-    sa.fromTokens(mes, " ", "\"");
-     */
-
-    
-    
-    //label->setText(sa[0], sendNotificationAsync);
-    //slider->setValue(, sendNotificationAsync);
+    if (sc->dirty) {
+        slider->setRange(sc->min, sc->max, sc->stepSize);
+        slider->setName(sc->name);
+        slider->setValue(sc->defaultValue, NotificationType::dontSendNotification);
+        slider->setDoubleClickReturnValue(true, sc->defaultValue);
+        label->setText(sc->name, NotificationType::dontSendNotification);
+        
+        sc->dirty = false;
+    }
 }
 
 //[/MiscUserCode]
@@ -181,8 +182,7 @@ void SendSlider::actionListenerCallback (const String& message)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="SendSlider" componentName=""
-                 parentClasses="public Component, public Timer, public ActionListener"
-                 constructorParams="int index, AudioProcessor&amp; processor"
+                 parentClasses="public Component, public Timer" constructorParams="int index, PureDataAudioProcessor&amp; processor"
                  variableInitialisers="index(index),&#10;processor(processor)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="100" initialHeight="130">

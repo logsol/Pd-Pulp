@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 4.1.0
 
   ------------------------------------------------------------------------------
 
@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
+#include "PluginProcessor.h"
 //[/Headers]
 
 
@@ -36,32 +37,30 @@
 */
 class SendSlider  : public Component,
                     public Timer,
-                    public ActionListener,
                     public SliderListener,
                     public LabelListener
 {
 public:
     //==============================================================================
-    SendSlider (int index, AudioProcessor& processor);
+    SendSlider (int index, PureDataAudioProcessor& processor);
     ~SendSlider();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void timerCallback();
-    void actionListenerCallback (const String& message);
+    void timerCallback() override;
     //[/UserMethods]
 
-    void paint (Graphics& g);
-    void resized();
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void labelTextChanged (Label* labelThatHasChanged);
+    void paint (Graphics& g) override;
+    void resized() override;
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void labelTextChanged (Label* labelThatHasChanged) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     int index;
-    AudioProcessor& processor;
+    PureDataAudioProcessor& processor;
     //[/UserVariables]
 
     //==============================================================================

@@ -17,11 +17,16 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "FloatParameter.h"
 
-class Receiver : public pd::PdReceiver, public ActionBroadcaster {
+//resolve circular dependency
+class PureDataAudioProcessor;
+
+
+
+class Receiver : public pd::PdReceiver {
     
 public:
 
-    Receiver(Array<FloatParameter*>* pList);
+    Receiver(Array<FloatParameter*>* pList, PureDataAudioProcessor* processor);
     virtual ~Receiver();
     
     void receiveMessage(const std::string& dest, const std::string& msg, const pd::List& list);
@@ -29,6 +34,9 @@ public:
     
 private:
     Array<FloatParameter*>* parameterList;
+    PureDataAudioProcessor* processor;
+    
+    void setErrorMessage(std::string msg);
 };
 
 

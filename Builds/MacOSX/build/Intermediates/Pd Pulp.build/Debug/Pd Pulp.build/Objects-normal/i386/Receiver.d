@@ -415,4 +415,7 @@ dependencies: /Users/logsol/Work/projects/c++/PdPulp/Source/Receiver.cpp \
   ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_LiveConstantEditor.h \
   ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_AnimatedAppComponent.h \
   /Users/logsol/Work/projects/c++/PdPulp/Source/FloatParameter.h \
-  /Users/logsol/Work/projects/c++/PdPulp/Source/SliderConfig.h
+  /Users/logsol/Work/projects/c++/PdPulp/Source/SliderConfig.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PluginProcessor.h \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdBase.hpp \
+  /Users/logsol/Work/projects/c++/PdPulp/Source/PdMidiReceiver.hpp

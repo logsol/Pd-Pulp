@@ -36,9 +36,9 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "Pd Pulp";
-    const char* const  versionString  = "0.1.1";
-    const int          versionNumber  = 0x101;
+    const char* const  projectName    = "Pd Pulp FX";
+    const char* const  versionString  = "0.2.0";
+    const int          versionNumber  = 0x200;
 }
 #endif
 

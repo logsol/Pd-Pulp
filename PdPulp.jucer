@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="EDfSFF" name="Pd Pulp" projectType="audioplug" version="0.1.1"
+<JUCERPROJECT id="EDfSFF" name="Pd Pulp" projectType="audioplug" version="0.2.0"
               bundleIdentifier="com.audiosalt.pdpulp" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
-              pluginName="Pd Pulp" pluginDesc="a pure data audio plugin runtime environment"
+              pluginName="Pd Pulp" pluginDesc="an audio plugin runtime environment for pure data"
               pluginManufacturer="Audiosalt" pluginManufacturerCode="ASLT"
               pluginCode="PDLP" pluginChannelConfigs="{1, 1}, {2, 2}" pluginIsSynth="1"
               pluginWantsMidiIn="1" pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpAU"
               pluginRTASCategory="" aaxIdentifier="com.audiosalt.pdpulp" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
-              jucerVersion="3.2.0" companyName="Audiosalt" companyWebsite="pd-pulp.net"
-              companyEmail="">
+              jucerVersion="4.1.0" companyName="Audiosalt" companyWebsite="audiosalt.com"
+              companyEmail="" pluginIsMidiEffectPlugin="0">
   <MAINGROUP id="bHW1xW" name="Pd Pulp">
     <GROUP id="{F7E3C56F-7CAF-CB35-5672-4BC60FA8EA87}" name="Source">
-      <FILE id="kzgE0q" name="SliderConfig.h" compile="0" resource="0" file="Source/SliderConfig.h"/>
-      <FILE id="R33Ub4" name="Receiver.cpp" compile="1" resource="0" file="Source/Receiver.cpp"/>
-      <FILE id="H5DaoW" name="Receiver.h" compile="0" resource="0" file="Source/Receiver.h"/>
+      <FILE id="U6vNtH" name="Receiver.cpp" compile="1" resource="0" file="Source/Receiver.cpp"/>
+      <FILE id="f11zxn" name="Receiver.h" compile="0" resource="0" file="Source/Receiver.h"/>
       <FILE id="gQe1kO" name="SendSlider.cpp" compile="1" resource="0" file="Source/SendSlider.cpp"/>
       <FILE id="GOTgOG" name="SendSlider.h" compile="0" resource="0" file="Source/SendSlider.h"/>
       <FILE id="BVTYBl" name="FloatParameter.h" compile="0" resource="0"

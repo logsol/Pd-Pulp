@@ -356,6 +356,7 @@ dependencies: \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/../../juce_audio_processors/format_types/juce_VST3PluginFormat.h \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/../../juce_audio_processors/scanning/juce_PluginDirectoryScanner.h \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/../../juce_audio_processors/scanning/juce_PluginListComponent.h \
+  /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/../utility/juce_CheckSettingMacros.h \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/../utility/juce_PluginHostType.h \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/juce_FakeMouseMoveGenerator.h \
   /Users/logsol/Work/projects/c++/PdPulp/JuceLibraryCode/modules/juce_audio_plugin_client/VST/../utility/juce_WindowsHooks.h

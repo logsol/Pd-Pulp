@@ -60,9 +60,9 @@ public:
         return text.getFloatValue();
     }
     
-    SliderConfig getSliderConfig ()
+    SliderConfig* getSliderConfig ()
     {
-        return sliderConfig;
+        return &sliderConfig;
     }
     
 private:
