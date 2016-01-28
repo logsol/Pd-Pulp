@@ -10,7 +10,7 @@ This is an audio plugin that enables you to run pd patches inside your DAW. You 
 </a>
 
 ###Download
-Download the latest version of the plugin from: [Releases](https://github.com/logsol/JuceLibPd/releases)
+Download the latest version of the plugin from: [Releases](https://github.com/logsol/pd-pulp/releases)
 
 ###About
 
