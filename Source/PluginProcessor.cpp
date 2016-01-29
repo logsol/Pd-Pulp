@@ -364,7 +364,10 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     
     
     if (!patchfile.exists()) {
-        status = "File does not exist";
+        if (patchfile.getFullPathName().toStdString() != "") {
+            status = "File does not exist";
+        }
+        // else keeps select patch message
         return;
     }
     
