@@ -317,6 +317,14 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
     }
 }
 
+void PureDataAudioProcessor::setParameterDefaults()
+{
+    for(size_t i = 0; i < parameterList.size(); i++) {
+        SliderConfig* sc = getParameterList().getUnchecked(i)->getSliderConfig();
+        setParameterNotifyingHost(i, sc->defaultValue);
+    }
+}
+
 void PureDataAudioProcessor::reloadPatch (double sampleRate)
 {
     if (isInstanceLocked) {

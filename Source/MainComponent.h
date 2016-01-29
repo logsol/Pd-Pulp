@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 4.1.0
 
   ------------------------------------------------------------------------------
 
@@ -50,9 +50,11 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g);
-    void resized();
-    void buttonClicked (Button* buttonThatWasClicked);
+    void paint (Graphics& g) override;
+    void resized() override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
+
+
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
@@ -76,8 +78,8 @@ private:
     ScopedPointer<TextButton> reloadButton;
     ScopedPointer<TextButton> editButton;
     ScopedPointer<Label> statusField;
-    ScopedPointer<Label> label;
-    ScopedPointer<Label> label2;
+    ScopedPointer<Label> title;
+    ScopedPointer<Label> slogan;
     ScopedPointer<Label> version;
 
 

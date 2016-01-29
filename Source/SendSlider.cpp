@@ -164,6 +164,7 @@ void SendSlider::timerCallback()
         slider->setValue(sc->defaultValue, NotificationType::dontSendNotification);
         slider->setDoubleClickReturnValue(true, sc->defaultValue);
         label->setText(sc->name, NotificationType::dontSendNotification);
+        processor.setParameterName(index-1, sc->name);
         
         sc->dirty = false;
     }

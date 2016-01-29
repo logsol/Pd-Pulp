@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.2.0
+  Created with Introjucer version: 4.1.0
 
   ------------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     findButton->setColour (TextButton::buttonOnColourId, Colour (0xff727272));
 
     addAndMakeVisible (pathField = new Label ("new label",
-                                              String::empty));
+                                              String()));
     pathField->setFont (Font (15.00f, Font::plain));
     pathField->setJustificationType (Justification::centred);
     pathField->setEditable (false, false, false);
@@ -74,7 +74,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     editButton->setColour (TextButton::buttonOnColourId, Colour (0xff727272));
 
     addAndMakeVisible (statusField = new Label ("new label",
-                                                String::empty));
+                                                String()));
     statusField->setFont (Font (11.00f, Font::plain));
     statusField->setJustificationType (Justification::centred);
     statusField->setEditable (false, false, false);
@@ -83,23 +83,23 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     statusField->setColour (TextEditor::textColourId, Colours::black);
     statusField->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label = new Label ("new label",
+    addAndMakeVisible (title = new Label ("new label",
                                           TRANS("Pd Pulp")));
-    label->setFont (Font ("DIN Alternate", 29.20f, Font::bold));
-    label->setJustificationType (Justification::topLeft);
-    label->setEditable (false, false, false);
-    label->setColour (Label::textColourId, Colours::white);
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    title->setFont (Font ("DIN Alternate", 29.20f, Font::bold));
+    title->setJustificationType (Justification::topLeft);
+    title->setEditable (false, false, false);
+    title->setColour (Label::textColourId, Colours::white);
+    title->setColour (TextEditor::textColourId, Colours::black);
+    title->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label2 = new Label ("new label",
+    addAndMakeVisible (slogan = new Label ("new label",
                                            TRANS("a pure data audio plugin runtime environment")));
-    label2->setFont (Font (14.00f, Font::italic));
-    label2->setJustificationType (Justification::bottomRight);
-    label2->setEditable (false, false, false);
-    label2->setColour (Label::textColourId, Colour (0x94ffffff));
-    label2->setColour (TextEditor::textColourId, Colours::black);
-    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    slogan->setFont (Font (14.00f, Font::italic));
+    slogan->setJustificationType (Justification::bottomRight);
+    slogan->setEditable (false, false, false);
+    slogan->setColour (Label::textColourId, Colour (0x94ffffff));
+    slogan->setColour (TextEditor::textColourId, Colours::black);
+    slogan->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (version = new Label ("new label",
                                             TRANS("v0.0.0")));
@@ -118,17 +118,15 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
 
 
     //[Constructor] You can add your own custom stuff here..
-    
+
     String versionStr;
     versionStr << "v" << JucePlugin_VersionString;
     version->setText(versionStr, dontSendNotification);
 
-    PureDataAudioProcessor& p = (PureDataAudioProcessor&) processor;
-    pathField->setText(p.getPatchFile().getFileName(), dontSendNotification);
+    pathField->setText(p->getPatchFile().getFileName(), dontSendNotification);
+    title->setText(p->getName(), dontSendNotification);
+    slogan->setText(JucePlugin_Desc, dontSendNotification);
 
-    
-    
-    
     startTimer(25);
     //[/Constructor]
 }
@@ -153,8 +151,8 @@ MainComponent::~MainComponent()
     reloadButton = nullptr;
     editButton = nullptr;
     statusField = nullptr;
-    label = nullptr;
-    label2 = nullptr;
+    title = nullptr;
+    slogan = nullptr;
     version = nullptr;
 
 
@@ -194,8 +192,8 @@ void MainComponent::resized()
     reloadButton->setBounds (352, 90, 64, 20);
     editButton->setBounds (424, 90, 48, 20);
     statusField->setBounds (25, 91, 311, 17);
-    label->setBounds (22, 16, 170, 32);
-    label2->setBounds (168, 24, 304, 16);
+    title->setBounds (22, 16, 170, 32);
+    slogan->setBounds (168, 24, 304, 16);
     version->setBounds (392, 34, 80, 16);
     //[UserResized] Add your own custom resize handling here..
 
@@ -221,6 +219,7 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
             pathField->setText(fc.getResult().getFileName(), dontSendNotification);
             p.setPatchFile(fc.getResult());
             p.reloadPatch(NULL);
+            p.setParameterDefaults();
         }
         //[/UserButtonCode_findButton]
     }
@@ -262,7 +261,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MainComponent" componentName=""
                  parentClasses="public PureDataAudioProcessorEditor, public Timer"
-                 constructorParams="PureDataAudioProcessor&amp; processor" variableInitialisers="PureDataAudioProcessorEditor(processor)"
+                 constructorParams="PureDataAudioProcessor&amp; processor" variableInitialisers="PureDataAudioProcessorEditor(processor), p(&amp;processor)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="500" initialHeight="385">
   <BACKGROUND backgroundColour="ff303030"/>
@@ -318,12 +317,12 @@ BEGIN_JUCER_METADATA
          textCol="bcbcbcbc" edTextCol="ff000000" edBkgCol="0" labelText=""
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="11" bold="0" italic="0" justification="36"/>
-  <LABEL name="new label" id="4f92306c17723f92" memberName="label" virtualName=""
+  <LABEL name="new label" id="4f92306c17723f92" memberName="title" virtualName=""
          explicitFocusOrder="0" pos="22 16 170 32" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="Pd Pulp" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="DIN Alternate"
          fontsize="29.199999999999999289" bold="1" italic="0" justification="9"/>
-  <LABEL name="new label" id="eb75ff4acec7a7ab" memberName="label2" virtualName=""
+  <LABEL name="new label" id="eb75ff4acec7a7ab" memberName="slogan" virtualName=""
          explicitFocusOrder="0" pos="168 24 304 16" textCol="94ffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="a pure data audio plugin runtime environment"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
