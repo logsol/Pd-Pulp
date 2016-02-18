@@ -44,6 +44,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
+         BundleIdentifier = "com.ableton.live"
          FilePath = "/Applications/Ableton Live 9 Suite.app">
       </PathRunnable>
       <MacroExpansion>

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C3508DBA55BC4B532AEAD30161E952676EBE4675",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C3508DBA55BC4B532AEAD30161E952676EBE4675" : 0,
+    "1A0B07D1631AC7F0F17FCE76695E42D64F01958F" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CF9569A9-8356-45D6-8798-CF89D88107CA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C3508DBA55BC4B532AEAD30161E952676EBE4675" : "PdPulp\/",
+    "1A0B07D1631AC7F0F17FCE76695E42D64F01958F" : "PdPulp\/libpd\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Pd Pulp FX",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "FX\/Builds\/MacOSX\/Pd Pulp FX.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/libpd\/libpd.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1A0B07D1631AC7F0F17FCE76695E42D64F01958F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:logsol\/Pd-Pulp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3508DBA55BC4B532AEAD30161E952676EBE4675"
+    }
+  ]
+}

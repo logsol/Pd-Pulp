@@ -63,32 +63,33 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    void reloadPatch(double sampleRate);
-    void setPatchFile(File file);
-    File getPatchFile();
-    void setParameterDefaults();
+    bool isSynth();
     
-    Array<FloatParameter*> getParameterList();
+    //void reloadPatch(double sampleRate);
+    //void setPatchFile(File file);
+    //File getPatchFile();
+    //void setParameterDefaults();
+    
+    //Array<FloatParameter*> getParameterList();
     
     
-    String status = "Select a pure data patch file...";
-    static bool otherInstanceAlreadyRunning;
-    bool isInstanceLocked = false;
-    Receiver receiver;
-    bool patchLoadError = false;
+    //String status = "Select a pure data patch file...";
+    //static bool otherInstanceAlreadyRunning;
+    //bool isInstanceLocked = false;
+    //Receiver receiver;
+    //bool patchLoadError = false;
 
 private:
-    void resetSliderConfigs();
-    ScopedPointer<pd::PdBase> pd;
-    int pos;
+    //void resetSliderConfigs();
+    ScopedPointer<pd::PdBase> pd = nullptr;
     
-    Array<FloatParameter*> parameterList; // no owned array because values are already owned by parent processor
-    AudioPlayHead::CurrentPositionInfo positionInfo;
-    File patchfile;
+    //Array<FloatParameter*> parameterList; // no owned array because values are already owned by parent processor
+    //AudioPlayHead::CurrentPositionInfo positionInfo;
+    //File patchfile;
      
     pd::Patch patch;
     HeapBlock<float> pdInBuffer, pdOutBuffer;
-    double cachedSampleRate;
+    //double cachedSampleRate;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PureDataAudioProcessor)
 };

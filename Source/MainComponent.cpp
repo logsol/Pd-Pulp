@@ -123,7 +123,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     versionStr << "v" << JucePlugin_VersionString;
     version->setText(versionStr, dontSendNotification);
 
-    pathField->setText(p->getPatchFile().getFileName(), dontSendNotification);
+    //pathField->setText(p->getPatchFile().getFileName(), dontSendNotification);
     title->setText(p->getName(), dontSendNotification);
     slogan->setText(JucePlugin_Desc, dontSendNotification);
 
@@ -217,22 +217,22 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
         if (fc.browseForFileToOpen())
         {
             pathField->setText(fc.getResult().getFileName(), dontSendNotification);
-            p.setPatchFile(fc.getResult());
-            p.reloadPatch(NULL);
-            p.setParameterDefaults();
+            //p.setPatchFile(fc.getResult());
+            //p.reloadPatch(NULL);
+            //p.setParameterDefaults();
         }
         //[/UserButtonCode_findButton]
     }
     else if (buttonThatWasClicked == reloadButton)
     {
         //[UserButtonCode_reloadButton] -- add your button handler code here..
-        p.reloadPatch(NULL);
+        //p.reloadPatch(NULL);
         //[/UserButtonCode_reloadButton]
     }
     else if (buttonThatWasClicked == editButton)
     {
         //[UserButtonCode_editButton] -- add your button handler code here..
-        p.getPatchFile().startAsProcess();
+        //p.getPatchFile().startAsProcess();
         //[/UserButtonCode_editButton]
     }
 
@@ -245,7 +245,7 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void MainComponent::timerCallback()
 {
-    statusField->setText(p->status, dontSendNotification);
+    //statusField->setText(p->status, dontSendNotification);
 }
 //[/MiscUserCode]
 

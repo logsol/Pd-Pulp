@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="EDfSFF" name="Pd Pulp FX" projectType="audioplug" version="0.2.0"
+<JUCERPROJECT id="EDfSFF" name="Pd Pulp FX" projectType="audioplug" version="0.2.1"
               bundleIdentifier="com.audiosalt.pdpulpfx" includeBinaryInAppConfig="1"
-              buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="0" buildAU="1" buildRTAS="0" buildAAX="0"
               pluginName="Pd Pulp FX" pluginDesc="an audio plugin runtime environment for pure data"
               pluginManufacturer="Audiosalt" pluginManufacturerCode="ASLT"
               pluginCode="PDLP" pluginChannelConfigs="{1, 1}, {2, 2}" pluginIsSynth="0"
               pluginWantsMidiIn="1" pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0"
-              pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpAU"
+              pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpFxAU"
               pluginRTASCategory="" aaxIdentifier="com.audiosalt.pdpulpfx"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.1.0"
               companyName="Audiosalt" companyWebsite="audiosalt.com" companyEmail=""
@@ -19,13 +19,6 @@
       <FILE id="tmxNMQ" name="MainComponent.cpp" compile="1" resource="0"
             file="../Source/MainComponent.cpp"/>
       <FILE id="pxnQUO" name="MainComponent.h" compile="0" resource="0" file="../Source/MainComponent.h"/>
-      <FILE id="Hjz8rB" name="PdBase.cpp" compile="1" resource="0" file="../Source/PdBase.cpp"/>
-      <FILE id="KRmniB" name="PdBase.hpp" compile="0" resource="0" file="../Source/PdBase.hpp"/>
-      <FILE id="o3GCPc" name="PdMidiReceiver.hpp" compile="0" resource="0"
-            file="../Source/PdMidiReceiver.hpp"/>
-      <FILE id="LBXGC9" name="PdReceiver.hpp" compile="0" resource="0" file="../Source/PdReceiver.hpp"/>
-      <FILE id="YyA4VF" name="PdTypes.cpp" compile="1" resource="0" file="../Source/PdTypes.cpp"/>
-      <FILE id="cZL0Ln" name="PdTypes.hpp" compile="0" resource="0" file="../Source/PdTypes.hpp"/>
       <FILE id="SUAtsx" name="PluginEditor.cpp" compile="1" resource="0"
             file="../Source/PluginEditor.cpp"/>
       <FILE id="l8bzNC" name="PluginEditor.h" compile="0" resource="0" file="../Source/PluginEditor.h"/>
@@ -35,15 +28,18 @@
             file="../Source/PluginProcessor.h"/>
       <FILE id="CIIHIh" name="Receiver.cpp" compile="1" resource="0" file="../Source/Receiver.cpp"/>
       <FILE id="uzHGko" name="Receiver.h" compile="0" resource="0" file="../Source/Receiver.h"/>
-      <FILE id="DDCZj0" name="ringbuffer.c" compile="1" resource="0" file="../Source/ringbuffer.c"/>
-      <FILE id="TtHmQ3" name="ringbuffer.h" compile="0" resource="0" file="../Source/ringbuffer.h"/>
       <FILE id="V4f7Je" name="SendSlider.cpp" compile="1" resource="0" file="../Source/SendSlider.cpp"/>
       <FILE id="fH2obh" name="SendSlider.h" compile="0" resource="0" file="../Source/SendSlider.h"/>
       <FILE id="xSwmoN" name="SliderConfig.h" compile="0" resource="0" file="../Source/SliderConfig.h"/>
-      <FILE id="XPlwYd" name="z_print_util.c" compile="1" resource="0" file="../Source/z_print_util.c"/>
-      <FILE id="k8iiAk" name="z_print_util.h" compile="0" resource="0" file="../Source/z_print_util.h"/>
-      <FILE id="quDJgL" name="z_queued.c" compile="1" resource="0" file="../Source/z_queued.c"/>
-      <FILE id="lqpB3P" name="z_queued.h" compile="0" resource="0" file="../Source/z_queued.h"/>
+    </GROUP>
+    <GROUP id="{06694326-31C4-AA9F-1CE0-11F018F44F47}" name="LibPd">
+      <FILE id="lSljmc" name="PdBase.cpp" compile="1" resource="0" file="../libpd/cpp/PdBase.cpp"/>
+      <FILE id="G75zQi" name="PdBase.hpp" compile="0" resource="0" file="../libpd/cpp/PdBase.hpp"/>
+      <FILE id="zeXpj5" name="PdMidiReceiver.hpp" compile="0" resource="0"
+            file="../libpd/cpp/PdMidiReceiver.hpp"/>
+      <FILE id="WXLgru" name="PdReceiver.hpp" compile="0" resource="0" file="../libpd/cpp/PdReceiver.hpp"/>
+      <FILE id="D065Uw" name="PdTypes.cpp" compile="1" resource="0" file="../libpd/cpp/PdTypes.cpp"/>
+      <FILE id="zOu8bJ" name="PdTypes.hpp" compile="0" resource="0" file="../libpd/cpp/PdTypes.hpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
@@ -52,8 +48,8 @@
                externalLibraries="pd-osx">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="64BitUniversal"
-                       isDebug="1" optimisation="1" targetName="Pd Pulp FX" headerPath="../../../libpd/pure-data/src&#10;../../../libpd/libpd_wrapper&#10;../../../libpd/libpd_wrapper/util"
-                       libraryPath="../../../libpd/"/>
+                       isDebug="1" optimisation="1" targetName="Pd Pulp FX" headerPath="../../../libpd/pure-data/src&#10;../../../libpd/libpd_wrapper&#10;../../../libpd/libpd_wrapper/util&#10;../../../libpd/cpp/&#10;"
+                       libraryPath="../../../libpd/Build/Products/Release"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="64BitUniversal"
                        isDebug="0" optimisation="3" targetName="Pd Pulp FX" headerPath="../../../libpd/pure-data/src&#10;../../../libpd/libpd_wrapper&#10;../../../libpd/libpd_wrapper/util"
                        libraryPath="../../../libpd/"/>

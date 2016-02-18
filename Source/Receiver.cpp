@@ -21,8 +21,8 @@ Receiver::~Receiver()
 
 void Receiver::setErrorMessage(std::string msg)
 {
-    processor->patchLoadError = true;
-    processor->status = msg;
+    //processor->patchLoadError = true;
+    //processor->status = msg;
 }
 
 void Receiver::receiveMessage(const std::string& dest, const std::string& msg, const pd::List& list)

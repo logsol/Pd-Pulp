@@ -10,11 +10,12 @@
 #include "PluginProcessor.h"
 #include "MainComponent.h"
 
-bool PureDataAudioProcessor::otherInstanceAlreadyRunning;
+//bool PureDataAudioProcessor::otherInstanceAlreadyRunning; //FIXME COMMENT BACK IN
 
 //==============================================================================
-PureDataAudioProcessor::PureDataAudioProcessor() : receiver(&parameterList, this)
+PureDataAudioProcessor::PureDataAudioProcessor()// : receiver(&parameterList, this)
 {
+    /*
     for (int i=0; i<10; i++) {
         FloatParameter* p = new FloatParameter (0.5, ("Param" + (String) (i+1)).toStdString());
         parameterList.add(p);
@@ -25,22 +26,33 @@ PureDataAudioProcessor::PureDataAudioProcessor() : receiver(&parameterList, this
         isInstanceLocked = true;
     }
     PureDataAudioProcessor::otherInstanceAlreadyRunning = true;
+     */
 }
 
 PureDataAudioProcessor::~PureDataAudioProcessor()
 {
+    
+    if (pd != nullptr)
+    {
+        pd->computeAudio (false);
+        pd->closePatch (patch);
+    }
     pd = nullptr;
     
+    /*
     if (!isInstanceLocked) {
         PureDataAudioProcessor::otherInstanceAlreadyRunning = false;
     }
+     */
 }
 
 //==============================================================================
 void PureDataAudioProcessor::setParameterName(int index, String name)
 {
+    /*
     FloatParameter* p = parameterList.getUnchecked(index);
     p->setName(name);
+     */
 }
 
 
@@ -126,29 +138,47 @@ void PureDataAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    /*
     reloadPatch(sampleRate);
     
     pos = 0;
+     */
+    
+    pd = new pd::PdBase;
+    pd->init (getNumInputChannels(), getNumOutputChannels(), sampleRate);
+    
+    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
+    pdInBuffer.calloc (pd->blockSize() * numChannels);
+    pdOutBuffer.calloc (pd->blockSize() * numChannels);
+
+    patch = pd->openPatch ("test4.pd", "/Users/logsol/Work/projects/c++/JuceLibPdBranchOfPdPulp/Source/");
+    jassert (patch.isValid());
+    
+    pd->computeAudio (true);
 }
 
 void PureDataAudioProcessor::releaseResources()
 {
+    
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+    /*
     if (pd != nullptr)
     {
         pd->computeAudio (false);
         pd->closePatch (patch);
     }
-
+    
     pd = nullptr;
     pdInBuffer.free();
     pdOutBuffer.free();
+     */
 }
 
 
 void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
+    /*
     if (isInstanceLocked) {
         return;
     }
@@ -199,7 +229,7 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
     {
         int max = jmin (len, pd->blockSize());
         
-        /* interleave audio */
+
         {
             float* dstBuffer = pdInBuffer.getData();
             for (int i = 0; i < max; ++i)
@@ -211,7 +241,7 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         
         pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
         
-        /* write-back */
+
         {
             const float* srcBuffer = pdOutBuffer.getData();
             for (int i = 0; i < max; ++i)
@@ -224,22 +254,68 @@ void PureDataAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         idx += max;
         len -= max;
     }
+    */
+    
+    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+    
+    
+    
+    int numChannels = jmin (getNumInputChannels(), getNumOutputChannels());
+    int len = buffer.getNumSamples();
+    int idx = 0;
+    
+    while (len > 0)
+    {
+        
+        int max = jmin (len, pd->blockSize());
+        
+        if (!isSynth())
+        {
+            float* dstBuffer = pdInBuffer.getData();
+            for (int i = 0; i < max; ++i)
+            {
+                for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
+                    *dstBuffer++ = buffer.getReadPointer(channelIndex) [idx + i];
+            }
+        }
+        
+        // causing crashes with synth au...
+        //pd->processFloat (1, pdInBuffer.getData(), pdOutBuffer.getData());
+        
+        {
+            const float* srcBuffer = pdOutBuffer.getData();
+            for (int i = 0; i < max; ++i)
+            {
+                for (int channelIndex = 0; channelIndex < numChannels; ++channelIndex)
+                    buffer.getWritePointer (channelIndex) [idx + i] = *srcBuffer++;
+            }
+        }
+        
+        idx += max;
+        len -= max;
+    }
+    
 }
 
 //==============================================================================
 bool PureDataAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    // FIXME
+    return false; //true;
+    
+    // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* PureDataAudioProcessor::createEditor()
 {
-    return new MainComponent(*this);
+    return nullptr; //new MainComponent(*this);
 }
 
 //==============================================================================
 void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+    /*
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -275,10 +351,12 @@ void PureDataAudioProcessor::getStateInformation (MemoryBlock& destData)
     //std::cout << "save [" << stream.toString() << "] " << std::endl;
     
     copyXmlToBinary(xml, destData);
+     */
 }
 
 void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+    /*
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     
@@ -315,9 +393,11 @@ void PureDataAudioProcessor::setStateInformation (const void* data, int sizeInBy
             }
         }
     }
+     */
 }
 
-void PureDataAudioProcessor::setParameterDefaults()
+/*
+ void PureDataAudioProcessor::setParameterDefaults()
 {
     for(size_t i = 0; i < parameterList.size(); i++) {
         SliderConfig* sc = getParameterList().getUnchecked(i)->getSliderConfig();
@@ -387,11 +467,11 @@ void PureDataAudioProcessor::reloadPatch (double sampleRate)
     } else {
         status = "Selected patch is not valid";
     }
-
 }
 
 void PureDataAudioProcessor::resetSliderConfigs()
 {
+ 
     SliderConfig def;
     
     for (int i=0; i < parameterList.size(); i++) {
@@ -404,23 +484,33 @@ void PureDataAudioProcessor::resetSliderConfigs()
         s->name = def.name + std::to_string(i+1);
         s->dirty = def.dirty;
     }
+ 
 }
 
 void PureDataAudioProcessor::setPatchFile(File file)
 {
-    patchfile = file;
+    //patchfile = file;
 }
 
 File PureDataAudioProcessor::getPatchFile()
 {
-    return patchfile;
+    //return patchfile;
 }
 
 Array<FloatParameter*> PureDataAudioProcessor::getParameterList()
 {
-    return parameterList;
+    //return parameterList;
 }
+*/
 
+bool PureDataAudioProcessor::isSynth()
+{
+    #if JucePlugin_IsSynth
+        return true;
+    #else
+        return false;
+    #endif
+}
 //==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()

@@ -9,18 +9,9 @@
               pluginWantsMidiIn="1" pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpAU"
               pluginRTASCategory="" aaxIdentifier="com.audiosalt.pdpulp" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
-              jucerVersion="3.2.0" companyName="Audiosalt" companyWebsite="audiosalt.com"
+              jucerVersion="4.1.0" companyName="Audiosalt" companyWebsite="audiosalt.com"
               companyEmail="" pluginIsMidiEffectPlugin="0">
   <MAINGROUP id="bHW1xW" name="Pd Pulp">
-    <GROUP id="{8FEDEB38-7EE1-10CF-2BF3-0925C9BC002A}" name="LibPd">
-      <FILE id="nlNYjO" name="PdBase.cpp" compile="1" resource="0" file="../libpd/cpp/PdBase.cpp"/>
-      <FILE id="n614dF" name="PdBase.hpp" compile="0" resource="0" file="../libpd/cpp/PdBase.hpp"/>
-      <FILE id="vhiZYk" name="PdMidiReceiver.hpp" compile="0" resource="0"
-            file="../libpd/cpp/PdMidiReceiver.hpp"/>
-      <FILE id="RrFRZ8" name="PdReceiver.hpp" compile="0" resource="0" file="../libpd/cpp/PdReceiver.hpp"/>
-      <FILE id="SmFwGU" name="PdTypes.cpp" compile="1" resource="0" file="../libpd/cpp/PdTypes.cpp"/>
-      <FILE id="BKQmYz" name="PdTypes.hpp" compile="0" resource="0" file="../libpd/cpp/PdTypes.hpp"/>
-    </GROUP>
     <GROUP id="{F7E3C56F-7CAF-CB35-5672-4BC60FA8EA87}" name="Source">
       <FILE id="wVoyEy" name="FloatParameter.h" compile="0" resource="0"
             file="../Source/FloatParameter.h"/>
@@ -40,6 +31,15 @@
       <FILE id="AxEnxl" name="SendSlider.h" compile="0" resource="0" file="../Source/SendSlider.h"/>
       <FILE id="YBA46Q" name="SliderConfig.h" compile="0" resource="0" file="../Source/SliderConfig.h"/>
     </GROUP>
+    <GROUP id="{8FEDEB38-7EE1-10CF-2BF3-0925C9BC002A}" name="LibPd">
+      <FILE id="nlNYjO" name="PdBase.cpp" compile="1" resource="0" file="../libpd/cpp/PdBase.cpp"/>
+      <FILE id="n614dF" name="PdBase.hpp" compile="0" resource="0" file="../libpd/cpp/PdBase.hpp"/>
+      <FILE id="vhiZYk" name="PdMidiReceiver.hpp" compile="0" resource="0"
+            file="../libpd/cpp/PdMidiReceiver.hpp"/>
+      <FILE id="RrFRZ8" name="PdReceiver.hpp" compile="0" resource="0" file="../libpd/cpp/PdReceiver.hpp"/>
+      <FILE id="SmFwGU" name="PdTypes.cpp" compile="1" resource="0" file="../libpd/cpp/PdTypes.cpp"/>
+      <FILE id="BKQmYz" name="PdTypes.hpp" compile="0" resource="0" file="../libpd/cpp/PdTypes.hpp"/>
+    </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="../../SDKs/VST3 SDK"
@@ -58,12 +58,12 @@
         <MODULEPATH id="juce_events" path="../modules"/>
         <MODULEPATH id="juce_data_structures" path="../modules"/>
         <MODULEPATH id="juce_core" path="../modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../modules"/>
         <MODULEPATH id="juce_audio_processors" path="../modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../modules"/>
         <MODULEPATH id="juce_audio_formats" path="../modules"/>
         <MODULEPATH id="juce_audio_devices" path="../modules"/>
         <MODULEPATH id="juce_audio_basics" path="../modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>

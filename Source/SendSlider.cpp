@@ -73,10 +73,10 @@ SendSlider::SendSlider (int index, PureDataAudioProcessor& processor)
     String labelText(p.getParameterName(index-1));
     label->setText(labelText, dontSendNotification);
 
-    SliderConfig* sc = processor.getParameterList().getUnchecked(index-1)->getSliderConfig();
-    slider->setDoubleClickReturnValue(true, sc->defaultValue);
-    slider->setRange(sc->min, sc->max, sc->stepSize);
-    slider->setValue(sc->defaultValue);
+    //SliderConfig* sc = processor.getParameterList().getUnchecked(index-1)->getSliderConfig();
+    //slider->setDoubleClickReturnValue(true, sc->defaultValue);
+    //slider->setRange(sc->min, sc->max, sc->stepSize);
+    //slider->setValue(sc->defaultValue);
 
     startTimer(25);
     //[/Constructor]
@@ -154,6 +154,7 @@ void SendSlider::labelTextChanged (Label* labelThatHasChanged)
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void SendSlider::timerCallback()
 {
+    /*
     slider->setValue(processor.getParameter(index-1), NotificationType::dontSendNotification);
 
     SliderConfig* sc = processor.getParameterList().getUnchecked(index-1)->getSliderConfig();
@@ -168,6 +169,7 @@ void SendSlider::timerCallback()
         
         sc->dirty = false;
     }
+     */
 }
 
 //[/MiscUserCode]

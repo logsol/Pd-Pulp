@@ -16,12 +16,31 @@
     <key>CFBundleSignature</key>
     <string>PTul</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.2.0</string>
+    <string>0.2.1</string>
     <key>CFBundleVersion</key>
-    <string>0.2.0</string>
+    <string>0.2.1</string>
     <key>NSHumanReadableCopyright</key>
     <string>Audiosalt</string>
     <key>NSHighResolutionCapable</key>
     <true/>
+    <key>AudioComponents</key>
+    <array>
+      <dict>
+        <key>name</key>
+        <string>Audiosalt: Pd Pulp FX</string>
+        <key>description</key>
+        <string>an audio plugin runtime environment for pure data</string>
+        <key>factoryFunction</key>
+        <string>PdPulpFxAUFactory</string>
+        <key>manufacturer</key>
+        <string>ASLT</string>
+        <key>type</key>
+        <string>aumf</string>
+        <key>subtype</key>
+        <string>PDLP</string>
+        <key>version</key>
+        <integer>513</integer>
+      </dict>
+    </array>
   </dict>
 </plist>
