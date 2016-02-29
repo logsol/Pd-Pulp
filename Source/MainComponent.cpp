@@ -110,6 +110,11 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     version->setColour (TextEditor::textColourId, Colours::black);
     version->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (libraryLink = new HyperlinkButton (TRANS("Patch Library"),
+                                                          URL ("http://patchstorage.com/platform/pd-pulp/")));
+    libraryLink->setTooltip (TRANS("http://patchstorage.com/platform/pd-pulp/"));
+    libraryLink->setColour (HyperlinkButton::textColourId, Colour (0x53ffffff));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -154,6 +159,7 @@ MainComponent::~MainComponent()
     title = nullptr;
     slogan = nullptr;
     version = nullptr;
+    libraryLink = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -187,14 +193,15 @@ void MainComponent::resized()
     sendSlider8->setBounds (197, 246, 98, 120);
     sendSlider9->setBounds (293, 246, 98, 120);
     sendSlider10->setBounds (389, 246, 98, 120);
-    findButton->setBounds (368, 56, 104, 24);
-    pathField->setBounds (24, 56, 328, 24);
-    reloadButton->setBounds (352, 90, 64, 20);
-    editButton->setBounds (424, 90, 48, 20);
-    statusField->setBounds (25, 91, 311, 17);
+    findButton->setBounds (358, 60, 120, 24);
+    pathField->setBounds (24, 60, 312, 24);
+    reloadButton->setBounds (358, 90, 64, 20);
+    editButton->setBounds (430, 90, 48, 20);
+    statusField->setBounds (25, 95, 311, 17);
     title->setBounds (22, 16, 170, 32);
-    slogan->setBounds (168, 24, 304, 16);
-    version->setBounds (392, 34, 80, 16);
+    slogan->setBounds (168, 19, 304, 16);
+    version->setBounds (425, 33, 46, 16);
+    libraryLink->setBounds (370, 34, 64, 16);
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
@@ -232,7 +239,8 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == editButton)
     {
         //[UserButtonCode_editButton] -- add your button handler code here..
-        p.getPatchFile().startAsProcess();
+        
+        //p.getPatchFile().startAsProcess();
         //[/UserButtonCode_editButton]
     }
 
@@ -296,24 +304,24 @@ BEGIN_JUCER_METADATA
              explicitFocusOrder="0" pos="389 246 98 120" sourceFile="SendSlider.cpp"
              constructorParams="10, processor"/>
   <TEXTBUTTON name="new button" id="1e5168d1e5fff12c" memberName="findButton"
-              virtualName="" explicitFocusOrder="0" pos="368 56 104 24" bgColOff="ffadadad"
+              virtualName="" explicitFocusOrder="0" pos="358 60 120 24" bgColOff="ffadadad"
               bgColOn="ff727272" buttonText="Find patch..." connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <LABEL name="new label" id="90c1e98cfe7db5e9" memberName="pathField"
-         virtualName="" explicitFocusOrder="0" pos="24 56 328 24" bkgCol="21000000"
+         virtualName="" explicitFocusOrder="0" pos="24 60 312 24" bkgCol="21000000"
          textCol="ffbcbcbc" edTextCol="ff000000" edBkgCol="0" labelText=""
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="new button" id="46837e8b39cdf5ab" memberName="reloadButton"
-              virtualName="" explicitFocusOrder="0" pos="352 90 64 20" tooltip="Reload the pd patch file."
+              virtualName="" explicitFocusOrder="0" pos="358 90 64 20" tooltip="Reload the pd patch file."
               bgColOff="ffadadad" bgColOn="ff727272" buttonText="Reload" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="fe82abb32a3951b0" memberName="editButton"
-              virtualName="" explicitFocusOrder="0" pos="424 90 48 20" tooltip="Opens PD editor if existent."
+              virtualName="" explicitFocusOrder="0" pos="430 90 48 20" tooltip="Opens PD editor if existent."
               bgColOff="ffadadad" bgColOn="ff727272" buttonText="Edit" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <LABEL name="new label" id="90ee85fe76c3c3e8" memberName="statusField"
-         virtualName="" explicitFocusOrder="0" pos="25 91 311 17" bkgCol="0"
+         virtualName="" explicitFocusOrder="0" pos="25 95 311 17" bkgCol="0"
          textCol="bcbcbcbc" edTextCol="ff000000" edBkgCol="0" labelText=""
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="11" bold="0" italic="0" justification="36"/>
@@ -323,15 +331,19 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="DIN Alternate"
          fontsize="29.199999999999999289" bold="1" italic="0" justification="9"/>
   <LABEL name="new label" id="eb75ff4acec7a7ab" memberName="slogan" virtualName=""
-         explicitFocusOrder="0" pos="168 24 304 16" textCol="94ffffff"
+         explicitFocusOrder="0" pos="168 19 304 16" textCol="94ffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="a pure data audio plugin runtime environment"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="14" bold="0" italic="1" justification="18"/>
   <LABEL name="new label" id="4479dbe59f1893ef" memberName="version" virtualName=""
-         explicitFocusOrder="0" pos="392 34 80 16" textCol="46ffffff"
+         explicitFocusOrder="0" pos="425 33 46 16" textCol="46ffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="v0.0.0" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="10" bold="0" italic="1" justification="18"/>
+  <HYPERLINKBUTTON name="Patch Library" id="7cd34084675dc20f" memberName="libraryLink"
+                   virtualName="" explicitFocusOrder="0" pos="370 34 64 16" tooltip="http://patchstorage.com/platform/pd-pulp/"
+                   textCol="53ffffff" buttonText="Patch Library" connectedEdges="0"
+                   needsCallback="0" radioGroupId="0" url="http://patchstorage.com/platform/pd-pulp/"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

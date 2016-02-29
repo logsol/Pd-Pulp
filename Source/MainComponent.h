@@ -50,9 +50,9 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
-    void resized() override;
-    void buttonClicked (Button* buttonThatWasClicked) override;
+    void paint (Graphics& g);
+    void resized();
+    void buttonClicked (Button* buttonThatWasClicked);
 
 
 
@@ -81,6 +81,7 @@ private:
     ScopedPointer<Label> title;
     ScopedPointer<Label> slogan;
     ScopedPointer<Label> version;
+    ScopedPointer<HyperlinkButton> libraryLink;
 
 
     //==============================================================================
