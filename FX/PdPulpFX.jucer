@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="EDfSFF" name="Pd Pulp FX" projectType="audioplug" version="0.2.0"
+<JUCERPROJECT id="EDfSFF" name="Pd Pulp FX" projectType="audioplug" version="0.2.1"
               bundleIdentifier="com.audiosalt.pdpulpfx" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
               pluginName="Pd Pulp FX" pluginDesc="an audio plugin runtime environment for pure data"
               pluginManufacturer="Audiosalt" pluginManufacturerCode="ASLT"
               pluginCode="PDLP" pluginChannelConfigs="{1, 1}, {2, 2}" pluginIsSynth="0"
               pluginWantsMidiIn="1" pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0"
-              pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpAU"
+              pluginEditorRequiresKeys="1" pluginAUExportPrefix="PdPulpFxAU"
               pluginRTASCategory="" aaxIdentifier="com.audiosalt.pdpulpfx"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.1.0"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.2.0"
               companyName="Audiosalt" companyWebsite="audiosalt.com" companyEmail=""
               pluginIsMidiEffectPlugin="0">
   <MAINGROUP id="bHW1xW" name="Pd Pulp FX">

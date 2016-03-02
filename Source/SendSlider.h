@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 4.1.0
+  Created with Introjucer version: 3.2.0
 
   ------------------------------------------------------------------------------
 
@@ -50,10 +50,10 @@ public:
     void timerCallback() override;
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
-    void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
-    void labelTextChanged (Label* labelThatHasChanged) override;
+    void paint (Graphics& g);
+    void resized();
+    void sliderValueChanged (Slider* sliderThatWasMoved);
+    void labelTextChanged (Label* labelThatHasChanged);
 
 
 

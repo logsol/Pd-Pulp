@@ -2040,8 +2040,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.2.0",
-					"JUCE_APP_VERSION_HEX=0x200", );
+					"JUCE_APP_VERSION=0.2.1",
+					"JUCE_APP_VERSION_HEX=0x201", );
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("\"../../../../SDKs/VST3 SDK\"", "../../JuceLibraryCode", "../../../modules", "../../../libpd/pure-data/src", "../../../libpd/libpd_wrapper", "../../../libpd/libpd_wrapper/util", "$(inherited)");
@@ -2067,8 +2067,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.2.0",
-					"JUCE_APP_VERSION_HEX=0x200", );
+					"JUCE_APP_VERSION=0.2.1",
+					"JUCE_APP_VERSION_HEX=0x201", );
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;

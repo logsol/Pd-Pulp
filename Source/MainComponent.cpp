@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 4.1.0
+  Created with Introjucer version: 3.2.0
 
   ------------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     findButton->setColour (TextButton::buttonOnColourId, Colour (0xff727272));
 
     addAndMakeVisible (pathField = new Label ("new label",
-                                              String()));
+                                              String::empty));
     pathField->setFont (Font (15.00f, Font::plain));
     pathField->setJustificationType (Justification::centred);
     pathField->setEditable (false, false, false);
@@ -74,7 +74,7 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
     editButton->setColour (TextButton::buttonOnColourId, Colour (0xff727272));
 
     addAndMakeVisible (statusField = new Label ("new label",
-                                                String()));
+                                                String::empty));
     statusField->setFont (Font (11.00f, Font::plain));
     statusField->setJustificationType (Justification::centred);
     statusField->setEditable (false, false, false);
@@ -114,6 +114,12 @@ MainComponent::MainComponent (PureDataAudioProcessor& processor)
                                                           URL ("http://patchstorage.com/platform/pd-pulp/")));
     libraryLink->setTooltip (TRANS("http://patchstorage.com/platform/pd-pulp/"));
     libraryLink->setColour (HyperlinkButton::textColourId, Colour (0x53ffffff));
+
+    addAndMakeVisible (libraryLink2 = new HyperlinkButton (TRANS("Wiki"),
+                                                           URL ("https://github.com/logsol/Pd-Pulp/wiki")));
+    libraryLink2->setTooltip (TRANS("https://github.com/logsol/Pd-Pulp/wiki"));
+    libraryLink2->setButtonText (TRANS("Wiki"));
+    libraryLink2->setColour (HyperlinkButton::textColourId, Colour (0x53ffffff));
 
 
     //[UserPreSize]
@@ -160,6 +166,7 @@ MainComponent::~MainComponent()
     slogan = nullptr;
     version = nullptr;
     libraryLink = nullptr;
+    libraryLink2 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -201,7 +208,8 @@ void MainComponent::resized()
     title->setBounds (22, 16, 170, 32);
     slogan->setBounds (168, 19, 304, 16);
     version->setBounds (425, 33, 46, 16);
-    libraryLink->setBounds (370, 34, 64, 16);
+    libraryLink->setBounds (369, 34, 64, 16);
+    libraryLink2->setBounds (336, 34, 27, 16);
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
@@ -239,7 +247,7 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == editButton)
     {
         //[UserButtonCode_editButton] -- add your button handler code here..
-        
+
         //p.getPatchFile().startAsProcess();
         //[/UserButtonCode_editButton]
     }
@@ -341,9 +349,13 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="10" bold="0" italic="1" justification="18"/>
   <HYPERLINKBUTTON name="Patch Library" id="7cd34084675dc20f" memberName="libraryLink"
-                   virtualName="" explicitFocusOrder="0" pos="370 34 64 16" tooltip="http://patchstorage.com/platform/pd-pulp/"
+                   virtualName="" explicitFocusOrder="0" pos="369 34 64 16" tooltip="http://patchstorage.com/platform/pd-pulp/"
                    textCol="53ffffff" buttonText="Patch Library" connectedEdges="0"
                    needsCallback="0" radioGroupId="0" url="http://patchstorage.com/platform/pd-pulp/"/>
+  <HYPERLINKBUTTON name="Patch Library" id="6742fabf4e69a8c8" memberName="libraryLink2"
+                   virtualName="" explicitFocusOrder="0" pos="336 34 27 16" tooltip="https://github.com/logsol/Pd-Pulp/wiki"
+                   textCol="53ffffff" buttonText="Wiki" connectedEdges="0" needsCallback="0"
+                   radioGroupId="0" url="https://github.com/logsol/Pd-Pulp/wiki"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
