@@ -247,8 +247,7 @@ void MainComponent::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == editButton)
     {
         //[UserButtonCode_editButton] -- add your button handler code here..
-
-        //p.getPatchFile().startAsProcess();
+        p.getPatchFile().startAsProcess();
         //[/UserButtonCode_editButton]
     }
 
